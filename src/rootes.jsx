@@ -1,8 +1,6 @@
 import Home from "./components/Home/Home";
 import MainHome from "./components/admin/admin home/MainHome";
 import Admin from "./components/admin/Admin/Admin";
-import AboutUs from "./components/about-us/AboutUs";
-import DriverForm from "./components/driver-form/DriverForm";
 import LoginAdmin from "./components/login/LoginAdmin";
 import Drivers from "./components/admin/drivers/Drivers";
 import ChatDriver from "./components/admin/chat/ChatDriver";
@@ -12,23 +10,18 @@ import CarBrand from "./components/admin/car-brend/CarBrand";
 import Service from "./components/admin/service/Service";
 import Balance from "./components/admin/balance/Balance";
 import Orders from "./components/admin/orders/Orders";
+import OfferApp from "./components/offer-app/OfferApp";
 
 export const publicRoutes = [
     {
         path: "/",
         element: <Home/>
-    },
-    {
-        path: "/about-us",
-        element: <AboutUs/>
-    },
-    {
-        path: "/driver-form",
-        element: <DriverForm/>
-    },
-    {
+    }, {
         path: "/login-admin-taxi",
         element: <LoginAdmin/>
+    }, {
+        path: "/offer-app",
+        element: <OfferApp/>
     }
 
 ];

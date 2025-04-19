@@ -8,18 +8,18 @@ $Color2: #001020;
   background-color: $Color2;
   display: flex;
   align-items: center;
-  padding: 20px;
+  padding: 20px 100px;
   color: white;
 
   .section-logo {
-    padding-left: 50px;
-    width: 40%;
+    padding-left: 10px;
+    width: 30%;
     height: 100%;
     display: flex;
     align-items: center;
 
     img {
-      width: 240px;
+      width: 200px;
     }
   }
 
@@ -34,6 +34,10 @@ $Color2: #001020;
       font-weight: bold;
     }
 
+    a{
+      color: white;
+      text-decoration: none;
+    }
     .item-footer {
       font-size: 20px;
       margin-top: 10px;
@@ -59,7 +63,7 @@ $Color2: #001020;
   }
 
   .section-social-medias {
-    width: 15%;
+    width: 20%;
     height: 100%;
 
     .title-footer {
@@ -118,6 +122,7 @@ $Color2: #001020;
 
 @media (max-width: 768px) {
   .footer-container {
+    padding: 20px 40px;
     margin-top: 60px;
     height: auto;
     display: block;
@@ -131,7 +136,7 @@ $Color2: #001020;
       justify-content: flex-start;
       align-items: center;
       img {
-        width: 60%;
+        width: 40%;
       }
     }
 

@@ -5,9 +5,12 @@ import {useTranslation} from "react-i18next";
 import i18next from "i18next";
 import {CSSTransition} from "react-transition-group";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Dropdown from 'react-bootstrap/Dropdown';
 import {MyContext} from "../App/App";
+import {useMediaQuery} from "@mui/material";
 
 const Navbar = () => {
+    const isMobile = useMediaQuery("(max-width: 768px)");
     let value = useContext(MyContext);
     const nodeRef = useRef(null);
     const [nav, setNav] = useState(false);
@@ -25,24 +28,62 @@ const Navbar = () => {
         id: 4, name: t('aboutus'), link: "/about-us"
     }];
 
-    const language = [{
-        code: 'uz', name: 'UZ', country_code: 'uz'
-    }, {
-        code: 'en', name: 'EN', country_code: 'en'
-    }, {
-        code: 'ru', name: 'RU', country_code: 'ru'
-    }];
+    const language = [
+        {
+            code: "uz",
+            name: "O'zbek tili",
+            country_code: "uz",
+        },
+        {
+            code: "en",
+            name: "English language",
+            country_code: "en",
+        },
+        {
+            code: "ru",
+            name: "Pусский язык",
+            country_code: "ru",
+        },
+    ];
+    const changeLanguage = (code) => {
+        localStorage.setItem("lng", code);
+        i18next.changeLanguage(code);
+    };
+
+    const menuClick = (id) => {
+        if (isMobile) {
+            if (id === 1) {
+                window.scrollTo(0, 0)
+            } else if (id === 2) {
+                window.scrollTo(0, 1600)
+            } else if (id === 3) {
+                window.scrollTo(0, 3500)
+            } else if (id === 4) {
+                window.scrollTo(0, 4300)
+            }
+        }
+
+        if (!isMobile) {
+            if (id === 1) {
+                window.scrollTo(0, 0)
+            } else if (id === 2) {
+                window.scrollTo(0, 1200)
+            } else if (id === 3) {
+                window.scrollTo(0, 1800)
+            } else if (id === 4) {
+                window.scrollTo(0, 3400)
+            }
+        }
+        setNav(false)
+    }
 
 
     return <nav className="navbar-wrapper">
-
         <div className="logo">
             <img onClick={() => {
                 navigate('/')
-            }} src="./images/logo2.png" alt=""/>
+            }} src="./images/logo.png" alt=""/>
         </div>
-
-
         <CSSTransition
             in={window.innerWidth > 768 ? true : nav}
             nodeRef={nodeRef}
@@ -58,53 +99,16 @@ const Navbar = () => {
                         <img onClick={() => setNav(false)} src="./images/close.png" alt=""/>
                     </div>
 
-                    <div className="nav-title-mobile">
-                        О компании
-                    </div>
                     {menu.map((item, index) => {
-                        return <div key={index} onClick={() => {
-                            navigate(item.link)
-                            if (item.id === 2) {
-                                window.scrollTo(0, 2200)
-                            } else if (item.id === 3) {
-                                window.scrollTo(0, 1300)
-                            }
-                            setNav(false)
-                        }} className={`nav-item`}>{item.name}</div>
+                        return <div key={index} onClick={() => menuClick(item.id)}
+                                    className={`nav-item`}>{item.name}</div>
                     })}
 
-                    <div onClick={() => navigate("driver-form")} className="driver_btn">
-                        <img src="./images/checkmark.png" alt=""/>
-                        Стать водителем
-                    </div>
-
-                    <div className="bttns-mobile">
-                        <div className="app-btn">
-                            <div className="left">
-                                <img src="./images/google-play.png" alt=""/>
-                            </div>
-                            <div className="right">
-                                <div className="top-text">
-                                    Доступно в
-                                </div>
-                                <div className="bottom-text">
-                                    Google Play
-                                </div>
-                            </div>
-                        </div>
-                        <div className="app-btn">
-                            <div className="left">
-                                <img src="./images/apple-logo.png" alt=""/>
-                            </div>
-                            <div className="right">
-                                <div className="top-text">
-                                    Доступно в
-                                </div>
-                                <div className="bottom-text">
-                                    App store
-                                </div>
-                            </div>
-                        </div>
+                    <div onClick={() => {
+                        setNav(false)
+                        window.scrollTo(0, 6300)
+                    }} className="driver_btn">
+                        {t("send")}
                     </div>
                 </div>
             </div>
@@ -112,53 +116,41 @@ const Navbar = () => {
         </CSSTransition>
 
         <div className="mobile-left-side">
-            <div onClick={() => setLanguageMenu(!languageMenu)} className='language-box'>
+            <div className="language-btn">
+                <Dropdown>
+                    <Dropdown.Toggle variant="success" id="dropdown-basic">
+                        <img className="globe" src="./images/globe-alt.webp" alt="language" loading="lazy"/>
+                        <div className="name">
+                            {language.map((item, index) => {
+                                return (
+                                    <div key={index}>
+                                        {i18next.language === item.code ? item.name : ""}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
 
-                {i18next.language === "uz" && <img src="./images/uz.png" alt=""/>}
+                        {language.map(({code, name, country_code}) => (
+                            <Dropdown.Item key={country_code}
+                                           onClick={() => changeLanguage(code)}>{name}</Dropdown.Item>
+                        ))}
 
-                {i18next.language === "en" && <img src="./images/en.png" alt=""/>}
-
-                {i18next.language === "ru" && <img src="./images/ru.png" alt=""/>}
-
-                <span>
-                 {language.map((item, index) => {
-                     return <div key={index}>
-                         {i18next.language === item.code ? item.name : ""}
-                     </div>
-                 })}
-            </span>
-                <img src="./images/chevron_down.png" alt=""/>
-
-                <CSSTransition
-                    in={languageMenu}
-                    nodeRef={nodeRef}
-                    timeout={300}
-                    classNames="alert"
-                    unmountOnExit
-                >
-                    <div ref={nodeRef} className="language_menu">
-                        {language.map(({code, name, country_code}) => (<div onClick={() => {
-                            i18next.changeLanguage(code);
-                            localStorage.setItem("lng", code);
-                            if (code === "uz") localStorage.setItem("language", "uz");
-                            if (code === "ru") localStorage.setItem("language", "ru");
-                            if (code === "en") localStorage.setItem("language", "en")
-                        }} className="items" key={country_code}>
-                            {name}
-                        </div>))}
-                    </div>
-                </CSSTransition>
+                    </Dropdown.Menu>
+                </Dropdown>
             </div>
 
-            <div onClick={() => navigate("driver-form")} className="driver_btn">
-                <img src="./images/checkmark.png" alt=""/>
-                Стать водителем
+            <div onClick={() => {
+                window.scrollTo(0, 5500)
+            }} className="driver_btn">
+                {t("send")}
             </div>
 
             <div className="nav-show">
                 <img onClick={() => {
                     setNav(true)
-                }} src="./images/menu_hamburger.png" alt=""/>
+                }} src="./images/menu.png" alt=""/>
             </div>
         </div>
 

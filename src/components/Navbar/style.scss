@@ -1,10 +1,10 @@
-$Color1: #00C389;
-$Color2: #001020;
+$Color1: rgba(45, 186, 108, 1);
+$Color2: rgba(20, 20, 20, 1);
 
 .navbar-wrapper {
   width: 100%;
-  height: 100px;
-  background-color: rgba(255, 255, 255, 0.15);
+  height: 68px;
+  background-color: rgba(255, 255, 255, 1);
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
   padding-left: 60px;
@@ -15,7 +15,7 @@ $Color2: #001020;
   position: relative;
 
   .logo {
-    width: 120px;
+    width: 160px;
 
     img {
       cursor: pointer;
@@ -29,7 +29,6 @@ $Color2: #001020;
   }
 
   .nav-list {
-    width: 40%;
     height: 100%;
 
     .sloy-mobile {
@@ -46,13 +45,14 @@ $Color2: #001020;
       .nav-item {
         position: relative;
         cursor: pointer;
-        line-height: 18.2px;
-        font-weight: 600;
-        font-size: 20px;
-        color: white;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 25px;
+        color: rgba(20, 20, 20, 1);
         transition: .4s;
         padding-bottom: 5px;
         border-bottom: 2px solid transparent;
+        margin-right: 30px;
 
         &::before {
           content: '';
@@ -115,88 +115,69 @@ $Color2: #001020;
 
   .mobile-left-side {
     display: flex;
-    .language-box {
-      margin-right: 18px;
-      padding: 6px;
-      background-color: $Color1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 8px;
-      color: white;
-      font-size: 16px;
-      font-weight: 500;
-      cursor: pointer;
-      position: relative;
 
-      .language_menu {
-        padding-top: 4px;
-        padding-bottom: 2px;
-        position: absolute;
-        bottom: -75px;
-        left: 8px;
-        width: 80%;
-        background-color: $Color1;
-        border-radius: 5px;
+    .language-btn {
+      .dropdown {
+        margin-right: 16px;
 
-        .items {
-          text-align: center;
-          font-size: 14px;
-          border-radius: 4px;
-          transition: .3s;
+        .dropdown-toggle {
+          display: flex;
+          align-items: center;
+          background-color: white;
+          padding: 10px 20px;
+          border: 1px solid #A2A4A63D;
+          border-radius: 12px;
+          cursor: pointer;
+          transition: 0.3s;
+          color: rgba(20, 20, 20, 1);
 
           &:hover {
-            background-color: #3b9b7d;
+            background-color: #f8f8f8;
+          }
+
+          .globe {
+            width: 22px;
+          }
+
+          .name {
+            margin-left: 6px;
+            margin-right: 6px;
           }
         }
+
+        .dropdown-menu {
+          border-radius: 16px;
+          overflow: hidden;
+
+          .dropdown-item {
+            &:active {
+              background-color: transparent !important;
+              color: inherit !important;
+            }
+          }
+        }
+
       }
-
-      img {
-        width: 25px;
-      }
-
-      span {
-        margin-right: 5px;
-        margin-left: 5px;
-      }
-
-      .alert-enter {
-        opacity: 0;
-        transform: scale(0.9);
-      }
-
-      .alert-enter-active {
-        opacity: 1;
-        transform: translateX(0);
-        transition: opacity 300ms, transform 300ms;
-      }
-
-      .alert-exit {
-        opacity: 1;
-      }
-
-      .alert-exit-active {
-        opacity: 0;
-        transform: scale(0.9);
-        transition: opacity 300ms, transform 300ms;
-      }
-
-
     }
 
     .driver_btn {
       cursor: pointer;
       padding: 10px 25px 10px 25px;
       border: none;
-      background-color: $Color2;
+      background-color: rgba(45, 186, 108, 1);
       display: flex;
       justify-content: center;
       align-items: center;
       color: white;
       border-radius: 8px;
+      transition: 0.3s;
 
       &:focus {
         outline: none;
+      }
+
+      &:hover {
+        background-color: rgb(38, 161, 93);
       }
 
       img {
@@ -210,15 +191,12 @@ $Color2: #001020;
   .navbar-wrapper {
     width: 100%;
     justify-content: space-between;
+    align-items: center;
     padding-left: 15px;
     padding-right: 15px;
 
-    background-color: rgba(255, 255, 255, 0.4);
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-
     .logo {
-      width: 100px;
+      width: 120px;
 
       img {
         cursor: pointer;
@@ -246,16 +224,16 @@ $Color2: #001020;
         background-color: white;
         display: block;
         padding-left: 25px;
-        padding-bottom: 25px;
+        padding-right: 25px;
+        padding-bottom: 50px;
 
         .nav-item-hide {
           margin-top: 30px;
-          padding-right: 30px;
           display: flex;
           justify-content: flex-end;
 
           img {
-            width: 25px;
+            width: 30px;
           }
         }
 
@@ -275,12 +253,12 @@ $Color2: #001020;
         }
 
         .driver_btn {
-          margin-top: 20px;
-          width: max-content;
+          margin-top: 40px;
+          width: 100%;
           cursor: pointer;
           padding: 15px 25px 15px 25px;
           border: none;
-          background-color: $Color1;
+          background-color: rgba(45, 186, 108, 1);
           display: flex;
           justify-content: center;
           align-items: center;
@@ -330,28 +308,6 @@ $Color2: #001020;
           }
         }
       }
-
-    }
-
-    .alert-enter {
-      opacity: 0;
-      transform: scale(0.9);
-    }
-
-    .alert-enter-active {
-      opacity: 1;
-      transform: translateX(0);
-      transition: opacity 300ms, transform 300ms;
-    }
-
-    .alert-exit {
-      opacity: 1;
-    }
-
-    .alert-exit-active {
-      opacity: 0;
-      transform: scale(0.9);
-      transition: opacity 300ms, transform 300ms;
     }
 
     .hide {
@@ -370,73 +326,35 @@ $Color2: #001020;
     .mobile-left-side {
       .driver_btn {
         display: none;
-        font-size: 14px;
-        padding: 5px 20px 5px 20px;
       }
 
-      .language-box {
-        padding: 6px;
-        background-color: transparent;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 8px;
-        color: white;
-        font-size: 16px;
-        font-weight: 500;
-        cursor: pointer;
-        position: relative;
-
-        .language_menu {
-          padding-top: 2px;
-          padding-bottom: 2px;
-          position: absolute;
-          bottom: -70px;
-          left: 8px;
-          width: 80%;
-          background-color: $Color1;
-          border-radius: 5px;
-
-          .items {
-            text-align: center;
-            font-size: 14px;
-            border-radius: 10px;
-            transition: .3s;
-
+      .language-btn {
+        .dropdown {
+          margin-right: 16px;
+          .dropdown-toggle {
+            padding: 8px 12px;
+            border: none;
             &:hover {
-              background-color: #3b9b7d;
+              background-color: white;
+            }
+            .globe {
+              width: 20px;
+            }
+            .name {
+              font-size: 14px;
             }
           }
-        }
 
-        img {
-          width: 25px;
-        }
+          .dropdown-menu {
+            .dropdown-item {
+              font-size: 14px;
+              &:active {
+                background-color: transparent !important;
+                color: inherit !important;
+              }
+            }
+          }
 
-        span {
-          margin-right: 5px;
-          margin-left: 5px;
-        }
-
-        .alert-enter {
-          opacity: 0;
-          transform: scale(0.9);
-        }
-
-        .alert-enter-active {
-          opacity: 1;
-          transform: translateX(0);
-          transition: opacity 300ms, transform 300ms;
-        }
-
-        .alert-exit {
-          opacity: 1;
-        }
-
-        .alert-exit-active {
-          opacity: 0;
-          transform: scale(0.9);
-          transition: opacity 300ms, transform 300ms;
         }
       }
     }

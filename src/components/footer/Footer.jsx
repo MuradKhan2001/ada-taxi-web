@@ -1,9 +1,13 @@
 import "./style.scss";
 import {useTranslation} from "react-i18next";
 import {useNavigate} from "react-router-dom";
+import {useMediaQuery} from "@mui/material";
+import React from "react";
 
 const Footer = () => {
+    const isMobile = useMediaQuery("(max-width: 768px)");
     const {t} = useTranslation();
+
     const menu = [{
         id: 1, name: t('home'), link: "/"
     }, {
@@ -13,7 +17,34 @@ const Footer = () => {
     }, {
         id: 4, name: t('aboutus'), link: "/about-us"
     }];
+
     const navigate = useNavigate();
+
+    const menuClick = (id) => {
+        if (isMobile) {
+            if (id === 1) {
+                window.scrollTo(0, 0)
+            } else if (id === 2) {
+                window.scrollTo(0, 1600)
+            } else if (id === 3) {
+                window.scrollTo(0, 3500)
+            } else if (id === 4) {
+                window.scrollTo(0, 4300)
+            }
+        }
+
+        if (!isMobile) {
+            if (id === 1) {
+                window.scrollTo(0, 0)
+            } else if (id === 2) {
+                window.scrollTo(0, 1200)
+            } else if (id === 3) {
+                window.scrollTo(0, 1800)
+            } else if (id === 4) {
+                window.scrollTo(0, 3400)
+            }
+        }
+    }
 
     return <>
         <div className="footer-container">
@@ -24,45 +55,23 @@ const Footer = () => {
 
             <div className="section-contact">
                 <div className="title-footer">
-                    Есть вопросы звоните ?
+                    {t("contact")}
                 </div>
                 <div className="item-footer">
-                    +998 94 009 09 06
+                    <a href="tel:+998915444499"> +998 91 544 44 99 </a>
                 </div>
                 <div className="item-footer">
-                    test02@gmail.com
-                </div>
-                <div className="title-footer">
-                    Помощь
-                </div>
-                <div className="item-footer">
-                    Обучательные страницы
+                    <a href="mailto:info@adataxi.uz"> info@adataxi.uz</a>
                 </div>
             </div>
 
             <div className="section-menu">
                 <div className="title-footer">
-                    О компании
+                    {t("menu")}
                 </div>
                 {
-                    menu.map((item, index)=>{
-                        return  <div key={index} onClick={() => {
-                            navigate(item.link)
-                            setTimeout(()=>{
-                                if (item.id === 2) {
-                                    window.scrollTo(0, 2200)
-                                }
-                                if (item.id === 3) {
-                                    window.scrollTo(0, 1300)
-                                }
-                                if (item.id === 4) {
-                                    window.scrollTo(0, 0)
-                                }
-                                if (item.id === 1) {
-                                    window.scrollTo(0, 0)
-                                }
-                            },200)
-                        }} className="item-footer">
+                    menu.map((item, index) => {
+                        return <div key={index} onClick={() => menuClick(item.id)} className="item-footer">
                             {item.name}
                         </div>
                     })
@@ -71,43 +80,20 @@ const Footer = () => {
 
             <div className="section-social-medias">
                 <div className="title-footer">
-                    Соц. Сети
+                    {t("smm")}
                 </div>
 
                 <div className="icons-box">
-                    <img src="./images/instagram1.png" alt=""/>
-                    <img src="./images/telegram1.png" alt=""/>
-                    <img src="./images/facebook1.png" alt=""/>
+                    <a href="">
+                        <img src="./images/instagram1.png" alt=""/>
+                    </a>
+                    <a href="">
+                        <img src="./images/telegram1.png" alt=""/>
+                    </a>
+                    <a href="">
+                        <img src="./images/facebook1.png" alt=""/>
+                    </a>
                 </div>
-
-               <div className="btns">
-                   <div className="app-btn">
-                       <div className="left">
-                           <img src="./images/google-play2.png" alt=""/>
-                       </div>
-                       <div className="right">
-                           <div className="top-text">
-                               Доступно в
-                           </div>
-                           <div className="bottom-text">
-                               Google Play
-                           </div>
-                       </div>
-                   </div>
-                   <div className="app-btn">
-                       <div className="left">
-                           <img src="./images/apple-logo2.png" alt=""/>
-                       </div>
-                       <div className="right">
-                           <div className="top-text">
-                               Доступно в
-                           </div>
-                           <div className="bottom-text">
-                               App store
-                           </div>
-                       </div>
-                   </div>
-               </div>
             </div>
         </div>
     </>
