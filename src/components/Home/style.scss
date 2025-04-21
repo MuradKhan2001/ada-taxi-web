@@ -652,6 +652,7 @@ $Color2: #001020;
 
       .right_side {
         width: 40%;
+        max-width: 500px;
         height: 100%;
 
         img {
@@ -741,6 +742,7 @@ $Color2: #001020;
 
       .right_side {
         width: 40%;
+        max-width: 500px;
         height: 100%;
 
         img {
@@ -1418,7 +1420,7 @@ $Color2: #001020;
       }
 
       .saction_one {
-        width: 80%;
+        width: 90%;
         margin: 10px auto;
         height: auto;
         border-radius: 20px;
@@ -1436,7 +1438,11 @@ $Color2: #001020;
 
           .bottom_btns {
             width: 100%;
-            justify-content: center;
+            justify-content: space-around;
+
+            a {
+              margin-right: 0px;
+            }
 
             .app-btn {
               .left {
@@ -1463,6 +1469,7 @@ $Color2: #001020;
         }
 
         .right_side {
+          margin: 0 auto;
           width: 100%;
           display: flex;
           justify-content: center;
@@ -1476,7 +1483,7 @@ $Color2: #001020;
       }
 
       .saction_one-client {
-        width: 80%;
+        width: 90%;
         height: auto;
         border-radius: 20px;
         display: block;
@@ -1494,8 +1501,11 @@ $Color2: #001020;
 
           .bottom_btns {
             width: 100%;
-            justify-content: center;
+            justify-content: space-around;
 
+            a {
+              margin-right: 0px;
+            }
             .app-btn {
               .left {
                 img {
@@ -1522,6 +1532,7 @@ $Color2: #001020;
 
         .right_side {
           width: 100%;
+          margin: 0 auto;
           display: flex;
           justify-content: center;
 

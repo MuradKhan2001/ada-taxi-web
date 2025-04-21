@@ -11,6 +11,7 @@ import Service from "./components/admin/service/Service";
 import Balance from "./components/admin/balance/Balance";
 import Orders from "./components/admin/orders/Orders";
 import OfferApp from "./components/offer-app/OfferApp";
+import PrivacyPolicy from "./components/privacy-policy/PrivacyPolicy";
 
 export const publicRoutes = [
     {
@@ -22,6 +23,10 @@ export const publicRoutes = [
     }, {
         path: "/offer-app",
         element: <OfferApp/>
+    },
+    {
+        path: "/privacy-policy",
+        element: <PrivacyPolicy/>
     }
 
 ];
