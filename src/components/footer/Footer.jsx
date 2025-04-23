@@ -6,6 +6,7 @@ import React from "react";
 
 const Footer = () => {
     const isMobile = useMediaQuery("(max-width: 768px)");
+    const navigate = useNavigate();
     const {t} = useTranslation();
 
     const menu = [{
@@ -18,30 +19,50 @@ const Footer = () => {
         id: 4, name: t('aboutus'), link: "/about-us"
     }];
 
-    const navigate = useNavigate();
-
     const menuClick = (id) => {
         if (isMobile) {
+
             if (id === 1) {
-                window.scrollTo(0, 0)
+                setTimeout(() => {
+                    window.scrollTo(0, 0)
+                }, 500);
+                navigate("/")
             } else if (id === 2) {
-                window.scrollTo(0, 1600)
+                setTimeout(() => {
+                    window.scrollTo(0, 1600)
+                }, 500);
+                navigate("/")
             } else if (id === 3) {
-                window.scrollTo(0, 3500)
+                navigate("/about-app")
             } else if (id === 4) {
-                window.scrollTo(0, 4300)
+                setTimeout(() => {
+                    window.scrollTo(0, 4300)
+                }, 500);
+                navigate("/")
             }
         }
 
         if (!isMobile) {
             if (id === 1) {
-                window.scrollTo(0, 0)
+                setTimeout(() => {
+                    window.scrollTo(0, 0)
+                }, 500);
+                navigate("/")
             } else if (id === 2) {
-                window.scrollTo(0, 1200)
+                setTimeout(() => {
+                    window.scrollTo(0, 1200)
+                }, 500);
+                navigate("/")
             } else if (id === 3) {
-                window.scrollTo(0, 1800)
+                navigate("/about-app")
+                setTimeout(() => {
+                    window.scrollTo(0, 0)
+                }, 500);
             } else if (id === 4) {
-                window.scrollTo(0, 3400)
+                setTimeout(() => {
+                    window.scrollTo(0, 3400)
+                }, 500);
+                navigate("/")
             }
         }
     }
@@ -61,7 +82,7 @@ const Footer = () => {
                     <a href="tel:+998915444499"> +998 91 544 44 99 </a>
                 </div>
                 <div className="item-footer">
-                    <a href="mailto:info@adataxi.uz"> info@adataxi.uz</a>
+                    <a href="mailto:adataxi2025@gmail.com"> adataxi2025@gmail.com</a>
                 </div>
             </div>
 
@@ -84,13 +105,13 @@ const Footer = () => {
                 </div>
 
                 <div className="icons-box">
-                    <a href="">
+                    <a target="_blank" href="https://www.instagram.com/adataxi_uz/">
                         <img src="./images/instagram1.png" alt=""/>
                     </a>
-                    <a href="">
+                    <a target="_blank" href="https://t.me/+Ruz2cjoeIC4xNTU6">
                         <img src="./images/telegram1.png" alt=""/>
                     </a>
-                    <a href="">
+                    <a target="_blank" href="https://www.facebook.com/profile.php?id=61575422315690&locale=ru_RU">
                         <img src="./images/facebook1.png" alt=""/>
                     </a>
                 </div>

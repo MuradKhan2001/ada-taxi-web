@@ -52,31 +52,49 @@ const Navbar = () => {
 
     const menuClick = (id) => {
         if (isMobile) {
+
             if (id === 1) {
-                window.scrollTo(0, 0)
+                setTimeout(() => {
+                    window.scrollTo(0, 0)
+                }, 500);
+                navigate("/")
             } else if (id === 2) {
-                window.scrollTo(0, 1600)
+                setTimeout(() => {
+                    window.scrollTo(0, 1600)
+                }, 500);
+                navigate("/")
             } else if (id === 3) {
-                window.scrollTo(0, 3500)
+                navigate("/about-app")
             } else if (id === 4) {
-                window.scrollTo(0, 4300)
+                setTimeout(() => {
+                    window.scrollTo(0, 4300)
+                }, 500);
+                navigate("/")
             }
         }
 
         if (!isMobile) {
             if (id === 1) {
-                window.scrollTo(0, 0)
+                setTimeout(() => {
+                    window.scrollTo(0, 0)
+                }, 500);
+                navigate("/")
             } else if (id === 2) {
-                window.scrollTo(0, 1200)
+                setTimeout(() => {
+                    window.scrollTo(0, 1200)
+                }, 500);
+                navigate("/")
             } else if (id === 3) {
-                window.scrollTo(0, 1800)
+                navigate("/about-app")
             } else if (id === 4) {
-                window.scrollTo(0, 3400)
+                setTimeout(() => {
+                    window.scrollTo(0, 3400)
+                }, 500);
+                navigate("/")
             }
         }
         setNav(false)
     }
-
 
     return <nav className="navbar-wrapper">
         <div className="logo">
@@ -85,7 +103,7 @@ const Navbar = () => {
             }} src="./images/logo.png" alt=""/>
         </div>
         <CSSTransition
-            in={window.innerWidth > 768 ? true : nav}
+            in={window.innerWidth > 1080 ? true : nav}
             nodeRef={nodeRef}
             timeout={100}
             classNames="alert"

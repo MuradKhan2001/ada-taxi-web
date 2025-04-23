@@ -60,5 +60,8 @@
   "menu": "Menyu",
   "smm": "Ijtimoiy tarmoqlar",
   "alert1": "Ma'lumotlar yuborildi! Tez orada adminimiz siz bilan bog'lanadi.",
-  "alert2": "Iltimos ma'lumotlarni to'liq kiriting!"
+  "alert2": "Iltimos ma'lumotlarni to'liq kiriting!",
+  "app-driver": "Ada taksi (Haydovchi)",
+  "app-client": "Ada taksi (Mijoz)",
+  "offer": "Oferta shartlari"
 }

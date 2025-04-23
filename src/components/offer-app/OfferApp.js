@@ -1,5 +1,6 @@
 import React from 'react';
 import "./style.scss"
+
 function OfferApp(props) {
     return (
         <div className="main-container">
@@ -85,7 +86,7 @@ function OfferApp(props) {
                 <div className="ql-code-block" data-language="plain">• Номи: ADA Taxi</div>
                 <div className="ql-code-block" data-language="plain">• Манзил: [Юридик манзил]</div>
                 <div className="ql-code-block" data-language="plain">• Электрон почта:
-                    <a href="mailto:info@adataxi.uz"> info@adataxi.uz</a></div>
+                    <a href="mailto:adataxi2025@gmail.com"> adataxi2025@gmail.com</a></div>
                 <div className="ql-code-block" data-language="plain">• Телефон: <a href="tel:+998915444499"> +998 91 544
                     44 99 </a></div>
             </div>

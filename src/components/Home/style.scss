@@ -36,6 +36,14 @@ $Color2: #001020;
           border-radius: 32px;
           box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 
+          .main-title {
+            margin-bottom: 10px;
+            color: #00c389;
+            font-weight: bold;
+            font-size: 22px;
+            letter-spacing: 2px;
+          }
+
           .main-text {
             font-size: 48px;
             font-weight: 700;
@@ -948,6 +956,7 @@ $Color2: #001020;
           -webkit-appearance: none;
           margin: 0;
         }
+
         input[type="number"] {
           -moz-appearance: textfield;
         }
@@ -979,13 +988,12 @@ $Color2: #001020;
   }
 }
 
-@media (max-width: 834px) {
+@media (max-width: 1280px) {
   .home-wrapper {
     .home_page {
       .navbar_box {
         width: 100%;
       }
-
       .home_contents {
         height: calc(100vh - 100px);
         display: flex;
@@ -1001,10 +1009,16 @@ $Color2: #001020;
 
           .home_text {
             width: 100%;
+            max-width: 600px;
             background-color: white;
             padding: 25px;
             border-radius: 32px;
             box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+
+            .main-title {
+              font-size: 18px;
+              letter-spacing: 1px;
+            }
 
             .main-text {
               font-size: 35px;
@@ -1332,7 +1346,7 @@ $Color2: #001020;
 
     .count-wrapper {
       margin-top: 40px;
-      padding: 20px 20px;
+      padding: 20px 20px 20px 60px;
 
       .title {
         font-size: 24px;
@@ -1421,6 +1435,7 @@ $Color2: #001020;
 
       .saction_one {
         width: 90%;
+        max-width: 400px;
         margin: 10px auto;
         height: auto;
         border-radius: 20px;
@@ -1484,6 +1499,7 @@ $Color2: #001020;
 
       .saction_one-client {
         width: 90%;
+        max-width: 400px;
         height: auto;
         border-radius: 20px;
         display: block;
@@ -1506,6 +1522,7 @@ $Color2: #001020;
             a {
               margin-right: 0px;
             }
+
             .app-btn {
               .left {
                 img {
@@ -1581,6 +1598,7 @@ $Color2: #001020;
     }
 
     .form-wrapper {
+
       padding: 20px 15px;
 
       .title {
@@ -1597,6 +1615,7 @@ $Color2: #001020;
 
       .form-box {
         width: 90%;
+        max-width: 500px;
         display: block;
         margin: 20px auto;
 

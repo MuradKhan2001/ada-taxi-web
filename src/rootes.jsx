@@ -12,6 +12,7 @@ import Balance from "./components/admin/balance/Balance";
 import Orders from "./components/admin/orders/Orders";
 import OfferApp from "./components/offer-app/OfferApp";
 import PrivacyPolicy from "./components/privacy-policy/PrivacyPolicy";
+import AboutApp from "./components/about-app/AboutApp";
 
 export const publicRoutes = [
     {
@@ -27,6 +28,10 @@ export const publicRoutes = [
     {
         path: "/privacy-policy",
         element: <PrivacyPolicy/>
+    },
+    {
+        path: "/about-app",
+        element: <AboutApp/>
     }
 
 ];

@@ -25,39 +25,6 @@ const Home = () => {
         {id: "travel", name: t("service4")},
     ]
     const [priceList, setPriceList] = useState([])
-
-    const persons = [
-        {
-            img: "./images/person1.png",
-            name: "Роман Тимошенко",
-            commit: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti, maiores!"
-        },
-        {
-            img: "./images/person2.png",
-            name: "Сергѐй Тара̀сик",
-            commit: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti, maiores! consectetur adipisicing elit. Deleniti, maiores"
-        },
-        {
-            img: "./images/person3.png",
-            name: "Ю̀рий Станисла̀в ",
-            commit: "Lorem ipsum dolor sit amet,  Deleniti, maiores!"
-        },
-        {
-            img: "./images/person4.png",
-            name: "На̀стя Андрейева",
-            commit: "Lorem ipsum dolor sit amet, consectetur adipisicing elit consectetur adipisicing elit. Deleniti, maiores!"
-        },
-        {
-            img: "./images/person5.png",
-            name: " Анна Ярикова",
-            commit: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti, maiores! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti, maiores!"
-        },
-        {
-            img: "./images/person6.jpg",
-            name: "Ро̀ма Ростисла̀в",
-            commit: "Lorem ipsum dolor sit amet."
-        }
-    ]
     const regions = [
         {name: t("Andijan"), latitude: 40.813616, longitude: 72.283463},
         {name: t("Bukhara"), latitude: 39.767070, longitude: 64.455393},
@@ -74,33 +41,6 @@ const Home = () => {
         {name: t("Karakalpakstan"), latitude: 43.730521, longitude: 59.064533}
     ];
     const [imageIndex, setImageIndex] = useState(0);
-    const [question, setQuestion] = useState([
-        {
-            title: "Is my vehicle insured during transport?",
-            des: "Trucking damage claims are covered by carrier from $100,000 up to $250,000 cargo insurance per load, and a minimum of 3/4 of a million dollars public liability and property damage."
-        },
-        {
-            title: "Can I put personal items in the car?",
-            des: "You can put personal items up to 100 lbs. All Carriers are good without any extra fee if you have around 100-150 lbs.\n" +
-                "\n" +
-                "If it is more than 100 lbs, it needs to be negotiated with the assigned carrier. Leader Auto Ship LLC will do our best as much as we do to make it reasonable for you!"
-        },
-        {
-            title: "When is the vehicle going to be picked-up?",
-            des: "After an order is placed, we begin the process to assign one of the best available one based on your shipment date. If you need ASAP shipment, we can make it happen within 1-24 or max 48 hours after.\n" +
-                "Then you will be given estimated pickup time. The carrier will call you to confirm the details ahead of schedule."
-        },
-        {
-            title: "When will my vehicle be delivered?",
-            des: "When you place an order, you will receive an estimated transit time for your shipment. This will give you a window for when your car will be delivered. Transit times depend on moving distance. With each delivery being unique, it is possible that your car would be delivered faster than the estimated transit time provided."
-        },
-        {
-            title: "How do I pay for my auto shipping?",
-            des: "We accept all major credit cards, electronic transfer, postal money order, and bank/certified check. No DEPOSIT FEE. We only get reservation fee once the suitable and available carrier is assigned with the guaranteed.\n" +
-                "\n" +
-                "The rest of the money you will pay ton the delivery spot once you get your car in cash or any certified funds. You can also do payment on Zelle, CashApp or Venmo!"
-        }
-    ]);
     const [ActiveQuestion, setActiveQuestion] = useState("");
     const [full_name, setFullName] = useState("");
     const [phone, setPhone] = useState("");
@@ -237,6 +177,9 @@ const Home = () => {
             <div className="home_contents">
                 <div className="left_side">
                     <div className="home_text">
+                        <div className="main-title">
+                            YO'LGA CHIQ YO'LDAN CHIQMA
+                        </div>
                         <div className="main-text">
                             {t("homeTitle")}
                         </div>
