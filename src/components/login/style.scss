@@ -8,6 +8,7 @@
 
   .login-card {
     padding: 30px 20px 30px 20px;
+    border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 
     .logo {
@@ -18,14 +19,14 @@
       margin-bottom: 20px;
       img {
         cursor: pointer;
-        width: 100px;
+        width: 170px;
       }
     }
 
     .input_box {
       width: 300px;
       input{
-        color: #00C389;
+        color: rgba(45, 186, 108, 1);
         margin-top: 16px;
         width: 100%;
         height: 40px;
@@ -43,7 +44,7 @@
       cursor: pointer;
       margin: 30px auto 0 auto;
       width: max-content;
-      background-color: #00C389;
+      background-color: rgba(45, 186, 108, 1);
       padding: 8px 25px 8px 25px;
       color: white;
       border-radius: 8px;

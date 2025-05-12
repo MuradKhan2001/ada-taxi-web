@@ -2,60 +2,22 @@ import {useEffect, useRef, useState, useMemo, useContext} from "react";
 import ReactPaginate from "react-paginate";
 import "./style.scss"
 import {CSSTransition} from "react-transition-group";
-import {FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
+import axios from "axios";
+import {MyContext} from "../../App/App";
 
 const Orders = () => {
+    let value = useContext(MyContext);
     const [modalShow, setModalShow] = useState({show: false, status: false});
     const nodeRef = useRef(null);
     const ref = useRef(null);
-    const [driversList, setDriversList] = useState([{}]);
+    const [driversList, setDriversList] = useState([]);
+    const [statistics, setStatistics] = useState([]);
+    const [information, setInformation] = useState([]);
+    const [tabs, setTabs] = useState("active");
     const worksPage = 100;
     const [pageNumber, setPageNumber] = useState(0);
+    const [getSearchText, setGetSearchText] = useState("");
     const pagesVisited = pageNumber * worksPage;
-
-    const productList = driversList.slice(pagesVisited, pagesVisited + worksPage).map((item, index) => {
-        return <tr key={index}>
-            <td>1</td>
-
-            <td>
-                <div className="text-driver">
-                    <div className="name"> MMM AAAA DDD</div>
-                    <div className="phone">
-                        99 999 99 99
-                    </div>
-                </div>
-            </td>
-
-            <td>
-                <div className="text-driver">
-                    <div className="name"> MMM AAAA DDD</div>
-                    <div className="phone">
-                        99 999 99 99
-                    </div>
-                </div>
-            </td>
-
-            <td>
-                Comford
-            </td>
-
-            <td>
-                Lorem ipsum dolor sit amet.
-            </td>
-
-            <td>
-               Service1, Service2
-            </td>
-
-            <td>
-                <div className="icon">
-                    <img onClick={() => {
-                        setModalShow({show: true, status: "car-information"});
-                    }} src="./images/admin/document.png" alt=""/>
-                </div>
-            </td>
-        </tr>
-    });
 
     const pageCount = Math.ceil(driversList.length / worksPage);
 
@@ -67,8 +29,82 @@ const Orders = () => {
         }, 500);
     };
 
-    return <div className="orders-container">
+    useEffect(() => {
+        axios.get(`${value.url}/dashboard/order/`, {
+            headers: {
+                "Authorization": `Token ${localStorage.getItem("token")}`
+            }
+        }).then((response) => {
+            setDriversList(response.data.orders);
+            setStatistics(response.data.statistics);
+        })
+    }, []);
 
+    const filteredList = driversList.filter(item => item.status === tabs);
+    const paginatedList = filteredList.slice(pagesVisited, pagesVisited + worksPage);
+
+    const productList = paginatedList
+        .filter((item) => {
+            const searchText = getSearchText.toString().toLowerCase().replace(/\s+/g, '').replace(/\+/g, '');
+            const phoneNumber = item.client.phone.toString().toLowerCase().replace(/\s+/g, '').replace(/\+/g, '');
+            return searchText === "" || phoneNumber.includes(searchText);
+        }).map((item, index) => {
+            return <tr key={index}>
+                <td>{index + 1}</td>
+                <td>
+                    <div className="text-driver">
+                        <div className="name">
+                            {item.client.first_name}
+                            {item.client.last_name}
+                        </div>
+                        <div className="phone">
+                            {item.client.phone}
+                        </div>
+                    </div>
+                </td>
+
+                <td>
+                    <div className="text-driver">
+                        {item.driver && <>
+                            <div className="name">
+                                {item.driver.first_name}
+                                {item.driver.last_name}
+                            </div>
+                            <div className="phone">
+                                {item.driver.phone}
+                            </div>
+                        </>}
+                    </div>
+                </td>
+
+                <td>
+                    {item.carservice.service}
+                </td>
+
+                <td>
+                    {item.services && item.services.map((item, index) => {
+                        return <>
+                            {item.name}:{item.cost} &ensp;
+                        </>
+                    })}
+                </td>
+
+                <td>
+                    <div className="icon">
+                        <img onClick={() => {
+                            setInformation(item)
+                            setModalShow({show: true, status: "car-information"});
+                        }} src="./images/admin/document.png" alt=""/>
+                    </div>
+                </td>
+
+                <td>
+                    {item.reject_comment}
+                </td>
+            </tr>
+        });
+
+    return <div className="orders-container">
         <CSSTransition
             in={modalShow.show}
             nodeRef={nodeRef}
@@ -88,7 +124,7 @@ const Orders = () => {
                                 />
                             </div>
                             <div className="title">
-                                Avtomobil ma'lumotlari
+                                Qo'shimcha malumotlar
                             </div>
 
 
@@ -152,46 +188,49 @@ const Orders = () => {
 
         <div className="header">
             <div className="search-box">
-                <img src="./images/admin/search.png" alt=""/>
-                <input placeholder="Telefon raqam kiriting" type="text"/>
+                <img src="./images/admin/find-person.png" alt=""/>
+                <input onChange={(e) => setGetSearchText(e.target.value)} placeholder="Telefon raqam kiriting"
+                       type="text"/>
             </div>
 
             <div className="statisitcs">
-                <div className="statistic-box">
-                    <div className="name">Faol buyurtmalar</div>
-                    <div className="num">232</div>
-                </div>
+                {statistics.length > 0 && statistics.map((item, index) => (
+                    <div onClick={() => setTabs(item.status)} key={index}
+                         className={`statistic-box ${tabs === item.status ? "active" : ""}`}>
+                        <div className="name">
+                            {item.status === "active" && "Faol buyurtmalar"}
+                            {item.status === "inactive" && "Jarayonda"}
+                            {item.status === "assigned" && "Tugallangan"}
+                            {item.status === "rejected" && "Bekor qilingan"}
 
-                <div className="statistic-box">
-                    <div className="name">Tugallangan</div>
-                    <div className="num">2322</div>
-                </div>
-
-                <div className="statistic-box">
-                    <div className="name">Jarayonda</div>
-                    <div className="num">222</div>
-                </div>
+                        </div>
+                        <div className="num">{item.count}</div>
+                    </div>
+                ))}
             </div>
         </div>
 
-        <table>
-            <thead>
-            <tr>
-                <th>№</th>
-                <th>Haydovchi</th>
-                <th>Mijoz</th>
-                <th>Tarif</th>
-                <th>Bekor bolish sababi</th>
-                <th>Xizmatlat</th>
-                <th>Qo'shimcha ma'lumotlar</th>
-            </tr>
+        <div className="wrapper-table">
+            <table>
+                <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Mijoz</th>
+                    <th>Haydovchi</th>
+                    <th>Tarif</th>
+                    <th>Xizmatlat</th>
+                    <th>Qo'shimcha ma'lumotlar</th>
+                    <th>Bekor bolish sababi</th>
+                </tr>
 
-            </thead>
+                </thead>
 
-            <tbody>
-            {productList}
-            </tbody>
-        </table>
+                <tbody>
+                {productList}
+                </tbody>
+            </table>
+        </div>
+
 
         <div className="pagination">
             {driversList.length > 100 ? <ReactPaginate

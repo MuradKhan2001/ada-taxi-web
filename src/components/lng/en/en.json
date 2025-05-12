@@ -60,5 +60,8 @@
   "menu": "Menu",
   "smm": "Social networks",
   "alert1": "Your information has been sent! Our admin will contact you shortly.",
-  "alert2": "Please enter your details in full!"
+  "alert2": "Please enter your details in full!",
+  "app-driver": "Ada taksi (Driver)",
+  "app-client": "Ada taksi (Client)",
+  "offer": "Offer terms"
 }

@@ -42,7 +42,7 @@ const LoginAdmin = () => {
 
         <div className="login-card">
             <div className="logo">
-                <img src="./images/logo1.png" alt=""/>
+                <img src="./images/logo.png" alt=""/>
             </div>
             <div className="input_box">
                 <input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Username" type="text"/>

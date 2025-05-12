@@ -10,51 +10,20 @@ import {
     Select
 } from "@mui/material";
 import "./style.scss"
+import axios from "axios";
+import {MyContext} from "../../App/App";
 
 const Service = () => {
+    let value = useContext(MyContext);
     const [modalShow, setModalShow] = useState({show: false, status: false});
     const nodeRef = useRef(null);
+    const [serviceList, setServiceList] = useState([]);
+    const [editId, setEditId] = useState("");
     const ref = useRef(null);
     const [driversList, setDriversList] = useState([{}]);
-    const [includedCars, setIncludedCars] = useState("");
-
-
     const worksPage = 100;
     const [pageNumber, setPageNumber] = useState(0);
     const pagesVisited = pageNumber * worksPage;
-
-    const productList = driversList.slice(pagesVisited, pagesVisited + worksPage).map((item, index) => {
-        return <tr key={index}>
-            <td>1</td>
-            <td>
-                Standart
-            </td>
-
-            <td>
-                Spark,
-                Nexia 3,
-                Lacceti
-            </td>
-
-            <td>4100</td>
-            <td>3500.0</td>
-            <td>600.0</td>
-            <td>400.0</td>
-            <td> 3</td>
-            <td>
-                <div className="icon">
-                    <img src="./images/admin/delete.png" alt=""/>
-                </div>
-            </td>
-            <td>
-            </td>
-            <div className="edit-icon">
-                <img onClick={() => {
-                    setModalShow({show: true, status: "edit-driver"});
-                }} src="./images/admin/edit-tools.png" alt=""/>
-            </div>
-        </tr>
-    });
 
     const pageCount = Math.ceil(driversList.length / worksPage);
 
@@ -69,40 +38,32 @@ const Service = () => {
     const validate = (values) => {
         const errors = {};
 
-        if (!values.first_name) {
-            errors.first_name = "Required";
+        if (!values.service) {
+            errors.service = "Required";
         }
 
-        if (!values.last_name) {
-            errors.last_name = "Required";
+        if (!values.includedCars) {
+            errors.includedCars = "Required";
         }
 
-        if (!values.phone) {
-            errors.phone = "Required";
+        if (!values.start_price) {
+            errors.start_price = "Required";
         }
 
-        if (!values.car_model) {
-            errors.car_model = "Required";
+        if (!values.price_per_km) {
+            errors.price_per_km = "Required";
         }
 
-        if (!values.car_name) {
-            errors.car_name = "Required";
+        if (!values.price_per_min) {
+            errors.price_per_min = "Required";
         }
 
-        if (!values.car_number) {
-            errors.car_number = "Required";
+        if (!values.wait_price_per_min) {
+            errors.wait_price_per_min = "Required";
         }
 
-        if (!values.car_manufactured_date) {
-            errors.car_manufactured_date = "Required";
-        }
-
-        if (!values.car_tex_passport_date) {
-            errors.car_tex_passport_date = "Required";
-        }
-
-        if (!values.license_date) {
-            errors.license_date = "Required";
+        if (!values.free_wait_time) {
+            errors.free_wait_time = "Required";
         }
 
         return errors;
@@ -110,35 +71,121 @@ const Service = () => {
 
     const formik = useFormik({
         initialValues: {
-            service:"",
-            start_price:"",
-            price_per_km:"",
-            price_per_min:"",
-            wait_price_per_min:"",
-            free_wait_time:""
+            service: "",
+            start_price: "",
+            price_per_km: "",
+            price_per_min: "",
+            wait_price_per_min: "",
+            free_wait_time: "",
+            includedCars: ""
         },
         validate,
         onSubmit: (values) => {
-            if (includedCars) {
-                sendAllInfo()
-            }
+            sendAllInfo()
         },
     });
-
 
     const sendAllInfo = () => {
         let allInfo = {
             service: formik.values.service,
-            includedCars: includedCars,
+            includedCars: formik.values.includedCars,
             start_price: formik.values.start_price,
             price_per_km: formik.values.price_per_km,
             price_per_min: formik.values.price_per_min,
             wait_price_per_min: formik.values.wait_price_per_min,
             free_wait_time: formik.values.free_wait_time
         }
-        console.log(allInfo);
+
+        if (!editId) {
+            axios.post(`${value.url}/dashboard/service/`, allInfo, {
+                headers: {
+                    Authorization: `Token ${localStorage.getItem("token")}`,
+                },
+            }).then((response) => {
+                getDrivers()
+                setModalShow({status: "", show: false})
+                formik.resetForm();
+            })
+        }
+
+        if (editId) {
+            axios.put(`${value.url}/dashboard/service/${editId}/`, allInfo,
+                {
+                    headers: {
+                        Authorization: `Token ${localStorage.getItem("token")}`,
+                    },
+                }).then((response) => {
+                getDrivers()
+                formik.resetForm();
+                setModalShow({status: "", show: false})
+            })
+        }
     }
 
+    useEffect(() => {
+        getDrivers()
+    }, []);
+
+    const delColor = (id) => {
+        axios.delete(`${value.url}/dashboard/service/${id}/`, {
+            headers: {
+                Authorization: `Token ${localStorage.getItem("token")}`,
+            },
+        }).then((response) => {
+            getDrivers()
+        })
+    }
+
+    const getDrivers = () => {
+        axios.get(`${value.url}/dashboard/service/`, {
+            headers: {
+                Authorization: `Token ${localStorage.getItem("token")}`,
+            },
+        }).then((response) => {
+            setServiceList(response.data);
+        })
+    }
+
+    const editValues = (service) => {
+        setEditId(service.id)
+        setModalShow({show: true, status: "edit-driver"});
+        formik.setValues({
+            service: service.service,
+            start_price: service.start_price,
+            price_per_km: service.price_per_km,
+            price_per_min: service.price_per_min,
+            wait_price_per_min: service.wait_price_per_min,
+            free_wait_time: service.free_wait_time,
+            includedCars: service.includedCars,
+        });
+    }
+
+    const productList = serviceList.slice(pagesVisited, pagesVisited + worksPage).map((item, index) => {
+        return <tr key={index}>
+            <td>{index + 1}</td>
+            <td>
+                {item.service}
+            </td>
+            <td>
+                {item.includedCars}
+            </td>
+            <td>{item.start_price}</td>
+            <td>{item.price_per_km}</td>
+            <td>{item.price_per_min}</td>
+            <td>{item.wait_price_per_min}</td>
+            <td>{item.free_wait_time}</td>
+            <td>
+                <div className="icon">
+                    <img onClick={() => delColor(item.id)} src="./images/admin/delete.png" alt=""/>
+                </div>
+            </td>
+            <td>
+            </td>
+            <div className="edit-icon">
+                <img onClick={() => editValues(item)} src="./images/admin/edit-tools.png" alt=""/>
+            </div>
+        </tr>
+    });
 
     return <div className="service-container">
         <CSSTransition
@@ -169,33 +216,34 @@ const Service = () => {
 
                                 <div className="select-box">
                                     <div className="select-sides">
-                                        <TextField
-                                            error={formik.errors.service === "Required"}
-                                            value={formik.values.service}
-                                            onChange={formik.handleChange}
-                                            name="service"
-                                            type="text"
-                                            sx={{m: 1, minWidth: "100%"}} size="small" id="outlined-basic"
-                                            label="Tarif nomi" variant="outlined" className="textField"/>
+                                        <FormControl sx={{m: 1, minWidth: "100%"}} size="small" className="selectMui">
+                                            <InputLabel id="demo-select-large-label">Tarif nomi</InputLabel>
+                                            <Select
+                                                error={formik.errors.service === "Required"}
+                                                labelid="demo-select-small-label"
+                                                id="demo-select-small"
+                                                value={formik.values.service}
+                                                label="Tarif nomi"
+                                                name="service"
+                                                onChange={formik.handleChange}
+                                            >
+                                                <MenuItem value="standart">Standart</MenuItem>
+                                                <MenuItem value="bussiness">Bussiness</MenuItem>
+                                                <MenuItem value="comfort">Comfort</MenuItem>
+                                            </Select>
+                                        </FormControl>
                                     </div>
 
                                     <div className="select-sides">
-                                        <FormControl sx={{m: 1, minWidth: "100%"}} size="small" className="selectMui">
-                                            <InputLabel id="demo-select-large-label">Tarifga kiruvchi
-                                                mashinalar:</InputLabel>
-                                            <Select
-                                                error={includedCars ? false : true}
-                                                labelid="demo-select-small-label"
-                                                id="demo-select-small"
-                                                value={includedCars}
-                                                label="Tarifga kiruvchi mashinalar:"
-                                                onChange={(e) => setIncludedCars(e.target.value)}
-                                            >
-                                                <MenuItem value="oq">Nexia</MenuItem>
-                                                <MenuItem value="qora">Lacetti</MenuItem>
-                                                <MenuItem value="qizil">Malibu</MenuItem>
-                                            </Select>
-                                        </FormControl>
+                                        <TextField
+                                            error={formik.errors.includedCars === "Required"}
+                                            value={formik.values.includedCars}
+                                            onChange={formik.handleChange}
+                                            name="includedCars"
+                                            type="text"
+                                            sx={{m: 1, minWidth: "100%"}} size="small" id="outlined-basic"
+                                            label="Tarifga kiruvchi mashinalar" variant="outlined"
+                                            className="textField"/>
                                     </div>
                                 </div>
 
@@ -258,7 +306,7 @@ const Service = () => {
                                     </div>
                                 </div>
 
-                                <div className="add-btn">
+                                <div onClick={sendAllInfo} className="add-btn">
                                     Tarif qo'shish
                                 </div>
 
@@ -284,33 +332,34 @@ const Service = () => {
 
                                 <div className="select-box">
                                     <div className="select-sides">
-                                        <TextField
-                                            error={formik.errors.service === "Required"}
-                                            value={formik.values.service}
-                                            onChange={formik.handleChange}
-                                            name="service"
-                                            type="text"
-                                            sx={{m: 1, minWidth: "100%"}} size="small" id="outlined-basic"
-                                            label="Tarif nomi" variant="outlined" className="textField"/>
+                                        <FormControl sx={{m: 1, minWidth: "100%"}} size="small" className="selectMui">
+                                            <InputLabel id="demo-select-large-label">Tarif nomi</InputLabel>
+                                            <Select
+                                                error={formik.errors.service === "Required"}
+                                                labelid="demo-select-small-label"
+                                                id="demo-select-small"
+                                                value={formik.values.service}
+                                                label="Tarif nomi"
+                                                name="service"
+                                                onChange={formik.handleChange}
+                                            >
+                                                <MenuItem value="standart">Standart</MenuItem>
+                                                <MenuItem value="bussiness">Bussiness</MenuItem>
+                                                <MenuItem value="comfort">Comfort</MenuItem>
+                                            </Select>
+                                        </FormControl>
                                     </div>
 
                                     <div className="select-sides">
-                                        <FormControl sx={{m: 1, minWidth: "100%"}} size="small" className="selectMui">
-                                            <InputLabel id="demo-select-large-label">Tarifga kiruvchi
-                                                mashinalar:</InputLabel>
-                                            <Select
-                                                error={includedCars ? false : true}
-                                                labelid="demo-select-small-label"
-                                                id="demo-select-small"
-                                                value={includedCars}
-                                                label="Tarifga kiruvchi mashinalar:"
-                                                onChange={(e) => setIncludedCars(e.target.value)}
-                                            >
-                                                <MenuItem value="oq">Nexia</MenuItem>
-                                                <MenuItem value="qora">Lacetti</MenuItem>
-                                                <MenuItem value="qizil">Malibu</MenuItem>
-                                            </Select>
-                                        </FormControl>
+                                        <TextField
+                                            error={formik.errors.includedCars === "Required"}
+                                            value={formik.values.includedCars}
+                                            onChange={formik.handleChange}
+                                            name="includedCars"
+                                            type="text"
+                                            sx={{m: 1, minWidth: "100%"}} size="small" id="outlined-basic"
+                                            label="Tarifga kiruvchi mashinalar" variant="outlined"
+                                            className="textField"/>
                                     </div>
                                 </div>
 
@@ -373,8 +422,8 @@ const Service = () => {
                                     </div>
                                 </div>
 
-                                <div className="add-btn">
-                                   Tasdiqlash
+                                <div onClick={sendAllInfo} className="add-btn">
+                                    Tasdiqlash
                                 </div>
 
                             </div>
@@ -387,14 +436,11 @@ const Service = () => {
         </CSSTransition>
 
         <div className="header">
-
-
             <div onClick={() => {
                 setModalShow({show: true, status: "add-driver"});
             }} className="add-driver-btn">
                 Tarif qo'shish
             </div>
-
         </div>
 
         <table>

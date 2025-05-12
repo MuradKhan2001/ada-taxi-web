@@ -3,7 +3,7 @@ import {useEffect, useMemo, useState} from "react"
 import {GoogleMap, useLoadScript, Marker, InfoWindow} from "@react-google-maps/api";
 import Loader from "./loader/Loader";
 
-const API_KEY = "AIzaSyAT1gB8sob8_piFwfeu3AaTL15yHyjuc30";
+const API_KEY = "AIzaSyBEN2azIRg6YCHa-tV8yAEUJoHsn__fRBM";
 
 const MainHome = () => {
 
@@ -52,7 +52,7 @@ const MainHome = () => {
                     <img src="./images/admin/driver.png" alt=""/>
                 </div>
                 <div className="title">Haydovchilar soni:</div>
-                <div className="count">5000</div>
+                <div className="count">503330</div>
             </div>
             <div className="statistic-card">
                 <div className="icon">

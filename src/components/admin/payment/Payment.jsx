@@ -1,60 +1,18 @@
 import {useEffect, useRef, useState, useMemo, useContext} from "react";
 import ReactPaginate from "react-paginate";
 import "./style.scss"
-import {CSSTransition} from "react-transition-group";
+import {MyContext} from "../../App/App";
+import axios from "axios";
 
 const Payment = () => {
-    const [modalShow, setModalShow] = useState({show: false, status: false});
-    const nodeRef = useRef(null);
+    let value = useContext(MyContext);
     const ref = useRef(null);
-    const [driversList, setDriversList] = useState([{}]);
+    const [driversList, setDriversList] = useState([]);
+    const [getSearchText, setGetSearchText] = useState("");
     const worksPage = 100;
     const [pageNumber, setPageNumber] = useState(0);
     const pagesVisited = pageNumber * worksPage;
-
-    const productList = driversList.slice(pagesVisited, pagesVisited + worksPage).map((item, index) => {
-        return <tr key={index}>
-            <td>1</td>
-
-            <td>
-                <div className="text-driver">
-                    <div className="name"> MMM AAAA DDD</div>
-                    <div className="phone">
-                        99 999 99 99
-                    </div>
-                </div>
-            </td>
-
-            <td>
-                <div className="text-driver">
-                    <div className="name"> MMM AAAA DDD</div>
-                    <div className="phone">
-                        99 999 99 99
-                    </div>
-                </div>
-            </td>
-
-            <td>
-                Comford
-            </td>
-
-            <td>
-                Lorem ipsum dolor sit amet.
-            </td>
-
-            <td>
-               Service1, Service2
-            </td>
-
-            <td>
-                <div className="icon">
-                    <img onClick={() => {
-                        setModalShow({show: true, status: "car-information"});
-                    }} src="./images/admin/document.png" alt=""/>
-                </div>
-            </td>
-        </tr>
-    });
+    const [statistics, setStatistics] = useState([]);
 
     const pageCount = Math.ceil(driversList.length / worksPage);
 
@@ -66,131 +24,92 @@ const Payment = () => {
         }, 500);
     };
 
+    useEffect(() => {
+        axios.get(`${value.url}/dashboard/payment/`, {
+            headers: {
+                "Authorization": `Token ${localStorage.getItem("token")}`
+            }
+        }).then((response) => {
+            setDriversList(response.data.payment);
+            setStatistics(response.data.statistics);
+        })
+    }, []);
+
+    const productList = driversList.slice(pagesVisited, pagesVisited + worksPage)
+        .filter((item) => {
+            const searchText = getSearchText.toString().toLowerCase().replace(/\s+/g, '').replace(/\+/g, '');
+            const phoneNumber = item.balance_id.toString().toLowerCase().replace(/\s+/g, '').replace(/\+/g, '');
+            return searchText === "" || phoneNumber.includes(searchText);
+        }).map((item, index) => {
+            return <tr key={index}>
+                <td>{index + 1}</td>
+
+                <td>
+                    {item.balance_id}
+                </td>
+
+                <td>
+                    {item.amount}
+                </td>
+
+                <td>
+                    {item.status}
+                </td>
+                <td>
+                    {item.payment_operator}
+                </td>
+
+                <td>
+                    {item.updated_at}
+                </td>
+                <td>
+                    {item.reason}
+                </td>
+            </tr>
+        });
+
     return <div className="payment-container">
-
-        <CSSTransition
-            in={modalShow.show}
-            nodeRef={nodeRef}
-            timeout={300}
-            classNames="alert"
-            unmountOnExit
-        >
-            <div className="modal-sloy">
-                <div ref={nodeRef} className="modal-card">
-                    {modalShow.status === "car-information" && (
-                        <div className="car-information">
-                            <div className="cancel-btn">
-                                <img
-                                    onClick={() => setModalShow({status: "", show: false})}
-                                    src="./images/admin/x.png"
-                                    alt=""
-                                />
-                            </div>
-                            <div className="title">
-                                Avtomobil ma'lumotlari
-                            </div>
-
-
-                            <div className="information">
-                                <div className="info">
-                                    <div className="title">Moshina modeli:</div>
-                                    <div className="text">Chevrolet</div>
-                                </div>
-
-                                <div className="info">
-                                    <div className="title">Moshina nomi:</div>
-                                    <div className="text">Malibu 2</div>
-                                </div>
-
-                                <div className="info">
-                                    <div className="title">Moshina raqami:</div>
-                                    <div className="text">AB288B</div>
-                                </div>
-
-                                <div className="info">
-                                    <div className="title">Moshina rangi:</div>
-                                    <div className="text">Qora</div>
-                                </div>
-
-                                <div className="info">
-                                    <div className="title">Ro'yxatdan o'tgan sana:</div>
-                                    <div className="text">20.10.2024</div>
-                                </div>
-
-                                <div className="info">
-                                    <div className="title">Tex passport berilgan sana:</div>
-                                    <div className="text">02.05.2024</div>
-                                </div>
-
-                                <div className="info">
-                                    <div className="title">Ruxsotnoma berilgan sana:</div>
-                                    <div className="text">21.05.2024</div>
-                                </div>
-
-                                <div className="info">
-                                    <div className="title">Yuk orta olishi:</div>
-                                    <div className="text">Yo'q</div>
-                                </div>
-
-                                <div className="info">
-                                    <div className="title">Kondisaner:</div>
-                                    <div className="text">Bor</div>
-                                </div>
-
-                                <div className="info">
-                                    <div className="title">Tasdiqlanganmi:</div>
-                                    <div className="text">Ha</div>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-                </div>
-
-            </div>
-        </CSSTransition>
-
         <div className="header">
             <div className="search-box">
                 <img src="./images/admin/search.png" alt=""/>
-                <input placeholder="Telefon raqam kiriting" type="text"/>
+                <input onChange={(e) => setGetSearchText(e.target.value)} placeholder="ID kiritng" type="text"/>
             </div>
-
             <div className="statisitcs">
-                <div className="statistic-box">
-                    <div className="name">Faol buyurtmalar</div>
-                    <div className="num">232</div>
-                </div>
+                {statistics.length > 0 && statistics.map((item, index) => (
+                    <div key={index} className="statistic-box">
+                        <div className="name">
+                            {item.status === "refunded" && "Qaytarilgan"}
+                            {item.status === "waiting" && "Kutilmoqda"}
+                            {item.status === "confirmed" && "Tasdiqlangan"}
+                            {item.status === "rejected" && "Bekor qilingan"}
 
-                <div className="statistic-box">
-                    <div className="name">Tugallangan</div>
-                    <div className="num">2322</div>
-                </div>
-
-                <div className="statistic-box">
-                    <div className="name">Jarayonda</div>
-                    <div className="num">222</div>
-                </div>
+                        </div>
+                        <div className="num">{item.count}</div>
+                    </div>
+                ))}
             </div>
         </div>
 
-        <table>
-            <thead>
-            <tr>
-                <th>№</th>
-                <th>Haydovchi</th>
-                <th>Mijoz</th>
-                <th>Tarif</th>
-                <th>Bekor bolish sababi</th>
-                <th>Xizmatlat</th>
-                <th>Qo'shimcha ma'lumotlar</th>
-            </tr>
+        <div className="wrapper-table">
+            <table>
+                <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Balans id</th>
+                    <th>Miqdor</th>
+                    <th>Status</th>
+                    <th>To'lov turi</th>
+                    <th>To'lov sanasi</th>
+                    <th>Sabab</th>
+                </tr>
 
-            </thead>
+                </thead>
 
-            <tbody>
-            {productList}
-            </tbody>
-        </table>
+                <tbody>
+                {productList}
+                </tbody>
+            </table>
+        </div>
 
         <div className="pagination">
             {driversList.length > 100 ? <ReactPaginate
@@ -206,7 +125,6 @@ const Payment = () => {
                 activeClassName={"paginationActive"}
             /> : ""}
         </div>
-
     </div>
 }
 

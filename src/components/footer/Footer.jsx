@@ -106,13 +106,13 @@ const Footer = () => {
 
                 <div className="icons-box">
                     <a target="_blank" href="https://www.instagram.com/adataxi_uz/">
-                        <img src="./images/instagram1.png" alt=""/>
+                        <img src="./images/instagram.png" alt=""/>
                     </a>
                     <a target="_blank" href="https://t.me/+Ruz2cjoeIC4xNTU6">
-                        <img src="./images/telegram1.png" alt=""/>
+                        <img src="./images/telegram.png" alt=""/>
                     </a>
-                    <a target="_blank" href="https://www.facebook.com/profile.php?id=61575422315690&locale=ru_RU">
-                        <img src="./images/facebook1.png" alt=""/>
+                    <a target="_blank" href="https://www.youtube.com/@AdaTaxi">
+                        <img src="./images/youtube.png" alt=""/>
                     </a>
                 </div>
             </div>

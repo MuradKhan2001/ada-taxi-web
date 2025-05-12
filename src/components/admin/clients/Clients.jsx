@@ -1,95 +1,28 @@
-import {useCallback, useEffect, useRef, useState, useMemo, useContext} from "react";
+import {useEffect, useRef, useState, useContext} from "react";
 import {CSSTransition} from "react-transition-group";
 import {useFormik} from "formik";
-import ImageViewer from 'react-simple-image-viewer';
 import ReactPaginate from "react-paginate";
-import {
-    TextField,
-    MenuItem,
-    InputLabel,
-    FormControl,
-    Select
-} from "@mui/material";
+import axios from "axios";
+import {TextField} from "@mui/material";
 import "./style.scss"
+import {MyContext} from "../../App/App";
 
 const Clients = () => {
+    let value = useContext(MyContext);
     const [modalShow, setModalShow] = useState({show: false, status: false});
     const nodeRef = useRef(null);
     const ref = useRef(null);
-    const [currentImage, setCurrentImage] = useState(0);
-    const [isViewerOpen, setIsViewerOpen] = useState(false);
-    const [photoBox, setPhotoBox] = useState([]);
-    const [driversList, setDriversList] = useState([{}]);
-
+    const [getSearchText, setGetSearchText] = useState("");
+    const [driverPhoto, setDriverPhoto] = useState(null);
+    const [driversList, setDriversList] = useState([]);
+    const [driverId, setDriverId] = useState("");
+    const [reason, setReason] = useState("");
     const [profileImage, setProfileImage] = useState(null);
-    const [car_color, setCar_color] = useState("");
-    const [luggage, setLuggage] = useState(false);
-    const [airconditioner, setAirconditioner] = useState(false);
-    const [inmark, setInMark] = useState(false)
-    const [car_images, setCar_images] = useState(null);
-    const [car_tex_passport_images, setCar_tex_passport_images] = useState(null);
-    const [license_images, setLicenseImages] = useState(null);
-
 
     const worksPage = 100;
     const [pageNumber, setPageNumber] = useState(0);
     const pagesVisited = pageNumber * worksPage;
-
-    const productList = driversList.slice(pagesVisited, pagesVisited + worksPage).map((item, index) => {
-        return <tr key={index}>
-            <td>1</td>
-            <td className="driver-wrapper">
-                <div className="icon-driver">
-                    <img onClick={() => {
-                        setModalShow({show: true, status: "driver-photo"});
-                    }} src="./images/admin/person.jpg" alt=""/>
-                </div>
-                <div className="text-driver">
-                    <div className="name"> MMM AAAA DDD</div>
-                </div>
-            </td>
-            <td>
-               99 999 99 99
-            </td>
-            <td>
-                <div className="icon-check">
-                    <img src="./images/admin/check.png" alt=""/>
-                </div>
-            </td>
-            <td>
-                <div className="icon-check">
-                    <img onClick={() => {
-                        setModalShow({show: true, status: "blocked"});
-                    }} src="./images/admin/block.png" alt=""/>
-                    <div className="reason-block">
-                        <img src="./images/admin/warning.png" alt=""/>
-                        <div className="text">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore, possimus.
-                        </div>
-                    </div>
-                </div>
-            </td>
-            <td>
-            </td>
-            <div className="edit-icon">
-                <img onClick={() => {
-                    setModalShow({show: true, status: "edit-driver"});
-                }} src="./images/admin/edit-tools.png" alt=""/>
-            </div>
-        </tr>
-    });
-
-
     const pageCount = Math.ceil(driversList.length / worksPage);
-
-    const changePage = ({selected}) => {
-        setPageNumber(selected)
-
-        setTimeout(() => {
-            ref.current?.scrollIntoView({behavior: "smooth"});
-        }, 500);
-    };
-
 
     const validate = (values) => {
         const errors = {};
@@ -105,141 +38,175 @@ const Clients = () => {
         if (!values.phone) {
             errors.phone = "Required";
         }
-
-        if (!values.car_model) {
-            errors.car_model = "Required";
-        }
-
-        if (!values.car_name) {
-            errors.car_name = "Required";
-        }
-
-        if (!values.car_number) {
-            errors.car_number = "Required";
-        }
-
-        if (!values.car_manufactured_date) {
-            errors.car_manufactured_date = "Required";
-        }
-
-        if (!values.car_tex_passport_date) {
-            errors.car_tex_passport_date = "Required";
-        }
-
-        if (!values.license_date) {
-            errors.license_date = "Required";
-        }
-
         return errors;
     };
-
     const formik = useFormik({
         initialValues: {
             first_name: "",
             last_name: "",
             phone: "",
-            car_model: "",
-            car_name: "",
-            car_number: "",
-            car_manufactured_date: null,
-            car_tex_passport_date: null,
-            license_date: null
         },
         validate,
         onSubmit: (values) => {
-            if (profileImage && car_color && car_images && car_tex_passport_images && license_images) {
+            if (!driverId && profileImage) {
+                sendAllInfo()
+            } else {
                 sendAllInfo()
             }
         },
     });
 
-    const openImageViewer = useCallback((index) => {
-        setCurrentImage(index);
-        setIsViewerOpen(true);
+    useEffect(() => {
+        getDrivers()
     }, []);
 
-    const closeImageViewer = () => {
-        setCurrentImage(0);
-        setIsViewerOpen(false);
+    const getDrivers = () => {
+        axios.get(`${value.url}/dashboard/client/`).then((response) => {
+            setDriversList(response.data);
+        })
+    }
+
+    const changePage = ({selected}) => {
+        setPageNumber(selected)
+
+        setTimeout(() => {
+            ref.current?.scrollIntoView({behavior: "smooth"});
+        }, 500);
     };
 
     const getInputPhoto = (event) => {
-
-        const {target: {files}} = event;
-        const file = files[0];
-
-        function getBase64(file) {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = function () {
-                setProfileImage(reader.result);
-            };
-            reader.onerror = function () {
-                setProfileImage(null);
-            };
-
-        }
-
-        getBase64(file);
-    };
-
-    const getInputDocs = (event) => {
-
-        if (event.target.name == "car_images") {
-
-        }
-
-        if (event.target.name == "car_tex_passport_images") {
-
-        }
-
-        if (event.target.name == "license_images") {
-
-        }
-
-
-        //
-        // const {target: {files}} = event;
-        // const file = files[0];
-        //
-        // function getBase64(file) {
-        //     const reader = new FileReader();
-        //     reader.readAsDataURL(file);
-        //     reader.onload = function () {
-        //         setProfileImage(reader.result);
-        //     };
-        //     reader.onerror = function () {
-        //         setProfileImage(null);
-        //     };
-        //
-        // }
-        //
-        // getBase64(file);
+        const file = event.target.files[0];
+        setProfileImage(file);
     };
 
     const sendAllInfo = () => {
-        let allInfo = {
+        const formData = new FormData();
+        let user = {
             first_name: formik.values.first_name,
             last_name: formik.values.last_name,
             phone: formik.values.phone,
-            profile_image: profileImage,
-            car_model: formik.values.car_model,
-            car_name: formik.values.car_name,
-            car_number: formik.values.car_number,
-            car_color: car_color,
-            car_manufactured_date: formik.values.car_manufactured_date,
-            car_tex_passport_date: formik.values.car_tex_passport_date,
-            license_date: formik.values.license_date,
-            luggage: luggage,
-            aircoditioner: airconditioner,
-            inmark: inmark,
-            car_images: car_images,
-            car_tex_passport_images: car_tex_passport_images,
-            license_images: license_images,
+            role: "client",
+            complete_profile: true,
+            is_verified: true
         }
-        console.log(allInfo);
+
+        if (profileImage) {
+            formData.append('profile_image', profileImage);
+        }
+
+        if (!driverId) {
+            axios.post(`${value.url}/dashboard/client/`, {user},
+                {}).then((response) => {
+                setModalShow({status: "", show: false})
+                getDrivers()
+            })
+        }
+
+        if (driverId) {
+            axios.patch(`${value.url}/dashboard/client/${driverId}/`, {user},
+                {}).then((response) => {
+                setModalShow({status: "", show: false})
+                getDrivers()
+            })
+        }
     }
 
+    const editInfo = (driver) => {
+        formik.setValues({
+            first_name: driver.user.first_name,
+            last_name: driver.user.last_name,
+            phone: driver.user.phone,
+        });
+        setDriverId(driver.id)
+    }
+
+    const blockDriver = (status) => {
+        if (status === "block" && reason.trim().length > 0) {
+            axios.post(`${value.url}/dashboard/client/${driverId}/block_client/`,
+                {reason}).then((response) => {
+                setModalShow({status: "", show: false})
+                getDrivers()
+                setReason("")
+            })
+        }
+
+        if (status === "unblock") {
+            axios.post(`${value.url}/dashboard/client/${driverId}/unblock_client/`,
+                {}).then((response) => {
+                setModalShow({status: "", show: false})
+                getDrivers()
+            })
+        }
+    }
+
+    const verify = (id) => {
+        axios.post(`${value.url}/dashboard/client/${id}/verify_client/`,
+            {}).then((response) => {
+            getDrivers()
+        })
+    }
+
+    const productList = driversList.slice(pagesVisited, pagesVisited + worksPage)
+        .filter((item) => {
+            const searchText = getSearchText.toString().toLowerCase().replace(/\s+/g, '').replace(/\+/g, '');
+            const phoneNumber = item.user.phone.toString().toLowerCase().replace(/\s+/g, '').replace(/\+/g, '');
+            return searchText === "" || phoneNumber.includes(searchText);
+        }).map((item, index) => {
+            return <tr key={index}>
+                <td>{index + 1}</td>
+                <td className="driver-wrapper">
+                    <div className="icon-driver">
+                        <img onClick={() => {
+                            setModalShow({show: true, status: "driver-photo"});
+                            setDriverPhoto(item.profile_image)
+                        }} src={item.user.profile_image} alt=""/>
+                    </div>
+                    <div className="text-driver">
+                        <div className="name">
+                            {item.user && item.user.first_name} &nbsp;
+                            {item.user && item.user.last_name}
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    {item.user && item.user.phone}
+                </td>
+                <td>
+                    <div className={item.user.is_verified ? "icon-check" : "icon-check disablet"}>
+                        <img onClick={() => {
+                            verify(item.id)
+                        }} src="./images/admin/check.png" alt=""/>
+                    </div>
+                </td>
+                <td>
+                    <div className={item.user.is_block ? "icon-check" : "icon-check disablet"}>
+                        <img onClick={() => {
+                            setModalShow({show: true, status: "blocked"});
+                            if (item.user.is_block) {
+                                setReason(item.user.reason)
+                            }
+                            setDriverId(item.id)
+                        }} src="./images/admin/block.png" alt="block"/>
+
+                        {item.user.reason && item.user.is_block && <div className="reason-block">
+                            <img src="./images/admin/warning.png" alt=""/>
+                            <div className="text">
+                                {item.user.reason}
+                            </div>
+                        </div>}
+
+                    </div>
+                </td>
+                <td>
+                </td>
+                <div className="edit-icon">
+                    <img onClick={() => {
+                        setModalShow({show: true, status: "edit-driver"});
+                        editInfo(item)
+                    }} src="./images/admin/edit-tools.png" alt=""/>
+                </div>
+            </tr>
+        });
 
     return <div className="clients-container">
         <CSSTransition
@@ -287,17 +254,8 @@ const Clients = () => {
                                             label="Ism" variant="outlined" className="textField"/>
                                     </div>
                                 </div>
+
                                 <div className="select-box">
-                                    <div className="select-sides">
-                                        <TextField
-                                            error={formik.errors.last_name === "Required"}
-                                            value={formik.values.last_name}
-                                            onChange={formik.handleChange}
-                                            name="last_name"
-                                            type="text"
-                                            sx={{m: 1, minWidth: "100%"}} size="small" id="outlined-basic"
-                                            label="Familiya" variant="outlined" className="textField"/>
-                                    </div>
                                     <div className="select-sides">
                                         <TextField
                                             error={formik.errors.phone === "Required"}
@@ -308,11 +266,23 @@ const Clients = () => {
                                             sx={{m: 1, minWidth: "100%"}} size="small" id="outlined-basic"
                                             label="Telefon raqam" variant="outlined" className="textField"/>
                                     </div>
+                                    <div className="select-sides">
+                                        <TextField
+                                            error={formik.errors.last_name === "Required"}
+                                            value={formik.values.last_name}
+                                            onChange={formik.handleChange}
+                                            name="last_name"
+                                            type="text"
+                                            sx={{m: 1, minWidth: "100%"}} size="small" id="outlined-basic"
+                                            label="Familiya" variant="outlined" className="textField"/>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div className="add-btn">
-                                Qo'shish
+                            <div onClick={() => {
+                                formik.handleSubmit()
+                            }} className="add-btn">
+                               Qo'shish
                             </div>
                         </div>
                     )}
@@ -328,25 +298,43 @@ const Clients = () => {
                             </div>
 
                             <div className="photo">
-                                <img src="./images/admin/person.jpg" alt=""/>
+                                <img src={driverPhoto} alt=""/>
                             </div>
                         </div>
                     )}
 
                     {modalShow.status === "blocked" && (
                         <div className="blocked">
+                            <div className="cancel-btn">
+                                <img onClick={() => {
+                                    setModalShow({status: "", show: false})
+                                    setReason("")
+                                }}
+                                     src="./images/admin/x.png"
+                                     alt=""
+                                />
+                            </div>
+
                             <div className="title">
-                                Mijozni bloklash
+                                Haydovchini bloklash
                             </div>
 
                             <div className="reason-text">
-                                <textarea placeholder="Blok qilish sababini kiriting..." name="" id=""></textarea>
+                                <textarea value={reason} onChange={(e) => setReason(e.target.value)}
+                                          placeholder="Blok qilish sababini kiriting..." name="reason"
+                                          id="reason"></textarea>
 
                                 <div className="buttons">
-                                    <div onClick={() => setModalShow({status: "", show: false})}
+                                    <div onClick={() => {
+                                        blockDriver("unblock")
+                                    }}
                                          className="cancel">Bekor qilish
                                     </div>
-                                    <div className="success">Bloklash</div>
+
+                                    <div onClick={() => {
+                                        blockDriver("block")
+                                    }} className="success">Bloklash
+                                    </div>
                                 </div>
                             </div>
 
@@ -388,17 +376,8 @@ const Clients = () => {
                                             label="Ism" variant="outlined" className="textField"/>
                                     </div>
                                 </div>
+
                                 <div className="select-box">
-                                    <div className="select-sides">
-                                        <TextField
-                                            error={formik.errors.last_name === "Required"}
-                                            value={formik.values.last_name}
-                                            onChange={formik.handleChange}
-                                            name="last_name"
-                                            type="text"
-                                            sx={{m: 1, minWidth: "100%"}} size="small" id="outlined-basic"
-                                            label="Familiya" variant="outlined" className="textField"/>
-                                    </div>
                                     <div className="select-sides">
                                         <TextField
                                             error={formik.errors.phone === "Required"}
@@ -409,38 +388,36 @@ const Clients = () => {
                                             sx={{m: 1, minWidth: "100%"}} size="small" id="outlined-basic"
                                             label="Telefon raqam" variant="outlined" className="textField"/>
                                     </div>
+                                    <div className="select-sides">
+                                        <TextField
+                                            error={formik.errors.last_name === "Required"}
+                                            value={formik.values.last_name}
+                                            onChange={formik.handleChange}
+                                            name="last_name"
+                                            type="text"
+                                            sx={{m: 1, minWidth: "100%"}} size="small" id="outlined-basic"
+                                            label="Familiya" variant="outlined" className="textField"/>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div className="add-btn">
-                               Tahrirlash
+                            <div onClick={() => {
+                                formik.handleSubmit()
+                            }} className="add-btn">
+                               Saqlash
                             </div>
+
                         </div>
                     )}
-
                 </div>
-
             </div>
         </CSSTransition>
 
-        <div className="open-viewer">
-            {isViewerOpen && (
-                <ImageViewer
-                    src={photoBox.map((item) => item.image)}
-                    currentIndex={currentImage}
-                    disableScroll={false}
-                    closeOnClickOutside={true}
-                    onClose={closeImageViewer}
-                />
-            )}
-        </div>
-
-
         <div className="header">
-
             <div className="search-box">
                 <img src="./images/admin/find-person.png" alt=""/>
-                <input placeholder="Telefon raqam kiriting" type="text"/>
+                <input onChange={(e) => setGetSearchText(e.target.value)} placeholder="Telefon raqam kiriting"
+                       type="text"/>
             </div>
 
             <div onClick={() => {
@@ -450,24 +427,24 @@ const Clients = () => {
             </div>
 
         </div>
+        <div className="table-wrapper">
+            <table>
+                <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Mijoz haqida</th>
+                    <th>Telefon raqam</th>
+                    <th>Tasdiqlash</th>
+                    <th>Bloklash</th>
+                    <th></th>
+                </tr>
+                </thead>
 
-        <table>
-            <thead>
-            <tr>
-                <th>№</th>
-                <th>Mijoz haqida</th>
-                <th>Telefon raqam</th>
-                <th>Tasdiqlash</th>
-                <th>Bloklash</th>
-                <th></th>
-            </tr>
-            </thead>
-
-            <tbody>
-            {productList}
-            </tbody>
-        </table>
-
+                <tbody>
+                {productList}
+                </tbody>
+            </table>
+        </div>
         <div className="pagination">
             {driversList.length > 100 ? <ReactPaginate
                 breakLabel="..."
@@ -482,7 +459,6 @@ const Clients = () => {
                 activeClassName={"paginationActive"}
             /> : ""}
         </div>
-
     </div>
 }
 

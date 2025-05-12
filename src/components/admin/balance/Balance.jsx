@@ -1,36 +1,53 @@
 import {useCallback, useEffect, useRef, useState, useMemo, useContext} from "react";
 import ReactPaginate from "react-paginate";
 import "./style.scss"
+import axios from "axios";
+import {MyContext} from "../../App/App";
 
 const Balance = () => {
+    const [getSearchText, setGetSearchText] = useState("");
+    let value = useContext(MyContext);
     const ref = useRef(null);
-    const [driversList, setDriversList] = useState([{}]);
+    const [driversList, setDriversList] = useState([]);
     const worksPage = 100;
     const [pageNumber, setPageNumber] = useState(0);
     const pagesVisited = pageNumber * worksPage;
 
-    const productList = driversList.slice(pagesVisited, pagesVisited + worksPage).map((item, index) => {
+    useEffect(() => {
+        axios.get(`${value.url}/dashboard/balance/`, {
+            headers: {
+                Authorization: `Token ${localStorage.getItem("token")}`,
+            },
+        }).then((response) => {
+            setDriversList(response.data);
+        })
+    }, []);
+
+    const productList = driversList.slice(pagesVisited, pagesVisited + worksPage)
+        .filter((item) => {
+            const searchText = getSearchText.toString().toLowerCase().replace(/\s+/g, '').replace(/\+/g, '');
+            const phoneNumber = item.driver.phone.toString().toLowerCase().replace(/\s+/g, '').replace(/\+/g, '');
+            return searchText === "" || phoneNumber.includes(searchText);
+        }).map((item, index) => {
         return <tr key={index}>
-            <td>1</td>
+            <td>{index+1}</td>
             <td className="driver-wrapper">
-                <div className="icon-driver">
-                    <img src="./images/admin/person.jpg" alt=""/>
-                </div>
                 <div className="text-driver">
-                    <div className="name"> MMM AAAA DDD</div>
+                    <div
+                        className="name">{item.driver && item.driver.first_name} {item.driver && item.driver.last_name}</div>
                     <div className="phone">
-                        99 999 99 99
+                        {item.driver && item.driver.phone}
                     </div>
                 </div>
             </td>
             <td>
-                01 Z777ZZ
+                {item.driver && item.driver.car_number}
             </td>
             <td>
-                593036
+                {item.id_number}
             </td>
             <td>
-                44750.0
+                {item.fund}
             </td>
         </tr>
     });
@@ -45,33 +62,33 @@ const Balance = () => {
         }, 500);
     };
 
-
     return <div className="balance-container">
-
         <div className="header">
             <div className="search-box">
                 <img src="./images/admin/search.png" alt=""/>
-                <input placeholder="Telefon raqam kiriting" type="text"/>
+                <input onChange={(e) => setGetSearchText(e.target.value)} placeholder="Telefon raqam kiriting" type="text"/>
             </div>
-
         </div>
 
-        <table>
-            <thead>
-            <tr>
-                <th>№</th>
-                <th>Haydovchi</th>
-                <th>Avtomobil raqami</th>
-                <th>Id raqam</th>
-                <th>Narx</th>
+        <div className="table-wrapper">
+            <table>
+                <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Haydovchi</th>
+                    <th>Avtomobil raqami</th>
+                    <th>Id raqam</th>
+                    <th>Narx</th>
 
-            </tr>
-            </thead>
+                </tr>
+                </thead>
 
-            <tbody>
-            {productList}
-            </tbody>
-        </table>
+                <tbody>
+                {productList}
+                </tbody>
+            </table>
+        </div>
+
 
         <div className="pagination">
             {driversList.length > 100 ? <ReactPaginate

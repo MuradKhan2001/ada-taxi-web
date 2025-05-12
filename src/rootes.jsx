@@ -13,6 +13,8 @@ import Orders from "./components/admin/orders/Orders";
 import OfferApp from "./components/offer-app/OfferApp";
 import PrivacyPolicy from "./components/privacy-policy/PrivacyPolicy";
 import AboutApp from "./components/about-app/AboutApp";
+import CarModel from "./components/admin/car-model/CarModel";
+import Payment from "./components/admin/payment/Payment";
 
 export const publicRoutes = [
     {
@@ -69,6 +71,10 @@ export const adminPageRoutes = [
         element: <CarBrand/>
     },
     {
+        path: "/car-models",
+        element: <CarModel/>
+    },
+    {
         path: "/service",
         element: <Service/>
     },
@@ -82,6 +88,6 @@ export const adminPageRoutes = [
     },
     {
         path: "/payment",
-        element: <Orders/>
+        element: <Payment/>
     },
 ];

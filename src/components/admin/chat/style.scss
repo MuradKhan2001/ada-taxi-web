@@ -7,7 +7,7 @@
   display: flex;
 
   .left {
-    width: 25%;
+    width: 30%;
     height: 100%;
     background-color: white;
 
@@ -56,31 +56,67 @@
         width: 96%;
         display: flex;
         align-items: center;
+        justify-content: center;
         transition: 0.3s;
 
         .photo {
-          width: 50px;
-          height: 50px;
+          width: 40px;
+          height: 40px;
           border-radius: 50%;
           overflow: hidden;
-          margin-right: 10px;
+          margin-right: 25px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: 1px solid #e3e3e3;
+
 
           img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            width: 60%;
+            margin-right: -5px;
           }
         }
 
         .left-content {
+          height: 100%;
+
           .name {
-            font-size: 18px;
+            width: 180px;
+            font-size: 16px;
             color: #6e6d6d;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
           }
 
           .number {
             font-size: 14px;
             color: rgba(128, 128, 128, 0.72);
+          }
+        }
+
+        .buttons {
+          margin-left: 10px;
+          display: flex;
+          align-items: center;
+
+          .disabled {
+            -webkit-filter: grayscale(100%);
+            filter: grayscale(100%);
+          }
+
+          img {
+            width: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+
+            &:hover {
+              transform: scale(1.1);
+            }
+
+            &:first-child {
+              margin-right: 10px;
+            }
           }
         }
 
@@ -97,7 +133,7 @@
   }
 
   .right {
-    width: 75%;
+    width: 70%;
     height: 100%;
 
     .top {
@@ -109,23 +145,27 @@
       background-color: white;
       padding-left: 30px;
 
+
       .photo {
-        width: 50px;
-        height: 50px;
+        width: 40px;
+        height: 40px;
         border-radius: 50%;
         overflow: hidden;
         margin-right: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #e3e3e3;
 
         img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
+          width: 60%;
+          margin-right: -5px;
         }
       }
 
       .left-content {
         .name {
-          font-size: 18px;
+          font-size: 16px;
           color: #6e6d6d;
         }
 
@@ -143,6 +183,7 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
+
       .scroll {
         padding: 20px;
         overflow-y: auto;
@@ -169,6 +210,14 @@
               color: #6a6a6a;
               font-size: 14px;
             }
+
+            .name {
+              position: absolute;
+              left: 10px;
+              top: -22px;
+              color: #6a6a6a;
+              font-size: 14px;
+            }
           }
         }
 
@@ -182,6 +231,7 @@
           .message {
             width: max-content;
             max-width: 60%;
+            min-width: 200px;
             padding: 10px;
             background-color: #00c389;
 
@@ -189,11 +239,18 @@
             position: relative;
             border-radius: 16px 16px 3px 16px;
 
-
             .time {
               position: absolute;
               right: 10px;
               bottom: -22px;
+              color: #6a6a6a;
+              font-size: 14px;
+            }
+
+            .name {
+              position: absolute;
+              left: 10px;
+              top: -22px;
               color: #6a6a6a;
               font-size: 14px;
             }

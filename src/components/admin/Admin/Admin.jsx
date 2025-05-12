@@ -37,8 +37,13 @@ const Admin = () => {
             img: "../images/admin/palette.png"
         },
         {
-            name: "Ranglar",
+            name: "Moshina brendi",
             url: "/car-brands",
+            img: "../images/admin/car.png"
+        },
+        {
+            name: "Moshina modeli",
+            url: "/car-models",
             img: "../images/admin/car.png"
         },
         {
@@ -85,7 +90,7 @@ const Admin = () => {
         <div className={`left-box ${adminMenu ? "" : "hide-left"}`}>
 
             <div className={`logo ${adminMenu ? "" : "hide-logo"}`}>
-                <img onClick={() => navigate('/')} src="../images/admin/logo1.png" alt=""/>
+                <img onClick={() => navigate('/')} src="../images/logo2.png" alt=""/>
             </div>
 
             <div className="admin-navbar">
@@ -110,7 +115,7 @@ const Admin = () => {
             <div className="top-box">
                 <div ></div>
                 <div className="title" >
-                    <img src="./images/admin/logo2.png" alt=""/>
+                    <img src="./images/logo.png" alt=""/>
                 </div>
                 <div className="icons">
                     <div onClick={() => {
