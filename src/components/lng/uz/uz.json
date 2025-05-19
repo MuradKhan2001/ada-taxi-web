@@ -63,5 +63,7 @@
   "alert2": "Iltimos ma'lumotlarni to'liq kiriting!",
   "app-driver": "Ada taksi (Haydovchi)",
   "app-client": "Ada taksi (Mijoz)",
-  "offer": "Oferta shartlari"
+  "offer": "Oferta shartlari",
+  "appClientWeb": "ADA Taxi yo‘lovchi web saytidan foydalaning!",
+  "appClientDesWeb": "Ushbu web sayt orqali endi buyurtma berish yanada oson. Kompyuteringiz brovseriga kiring va client.adataxi.uz dep yozing va ro'yxatdan o'ting. So'ng istalgan yo'nalishga buyurtma berishingiz mumkin."
 }

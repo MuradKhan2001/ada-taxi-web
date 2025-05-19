@@ -503,6 +503,31 @@ const Home = () => {
             </div>
         </div>
         <div className="home_sections">
+            <div className="saction-one-client-web">
+                <div className="right_side">
+                    <img src="./images/laptop.png" alt=""/>
+                </div>
+                <div className="left_side">
+                    <div className="top_text">
+                        {t("appClientWeb")}
+                    </div>
+                    <div className="des">
+                        {t("appClientDesWeb")}
+                    </div>
+                    <div className="bottom_btns">
+                        <a target="_blank" href="https://client.adataxi.uz/">
+                            <div className="link-web">
+                                <div className="icon">
+                                    <img src="./images/internet.png" alt=""/>
+                                </div>
+                                <div className="text">https://client.adataxi.uz</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div className="home_sections">
             <div className="title-comment">
                 {t("clientsTitle")}
             </div>

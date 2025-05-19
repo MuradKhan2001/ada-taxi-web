@@ -63,5 +63,7 @@
   "alert2": "Please enter your details in full!",
   "app-driver": "Ada taksi (Driver)",
   "app-client": "Ada taksi (Client)",
-  "offer": "Offer terms"
+  "offer": "Offer terms",
+  "appClientWeb": "Use the ADA Taxi passenger website!",
+  "appClientDesWeb": "Now ordering through this website is even easier. Go to your computer's browser and type client.adataxi.uz and register. Then you can order for any route."
 }
