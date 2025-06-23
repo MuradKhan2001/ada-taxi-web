@@ -401,7 +401,7 @@ const Home = () => {
                     <ScrollTrigger onEnter={() => setCounterOn(true)} onExit={() => setCounterOn(false)}>
                         <div className="num">
                             {counterOn &&
-                                <CountUp start={0} end={counter.avilable_drivers && counter.avilable_drivers}
+                                <CountUp start={0} end={7}
                                          duration={2}
                                          delay={0}/>}
                             +
