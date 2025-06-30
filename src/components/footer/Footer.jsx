@@ -21,7 +21,6 @@ const Footer = () => {
 
     const menuClick = (id) => {
         if (isMobile) {
-
             if (id === 1) {
                 setTimeout(() => {
                     window.scrollTo(0, 0)
@@ -60,7 +59,7 @@ const Footer = () => {
                 }, 500);
             } else if (id === 4) {
                 setTimeout(() => {
-                    window.scrollTo(0, 3400)
+                    window.scrollTo(0, 4000)
                 }, 500);
                 navigate("/")
             }

@@ -9,10 +9,12 @@ import {useTranslation} from "react-i18next";
 import {useMediaQuery} from "@mui/material";
 import axios from "axios";
 import i18next from "i18next";
+import {useNavigate} from "react-router-dom";
 
 const Home = () => {
     const isMobile = useMediaQuery("(max-width: 768px)");
     const {t} = useTranslation();
+    const navigate = useNavigate();
     const [activeTabItem, setActiveTabItem] = useState("regional")
     const [activeTabItem2, setActiveTabItem2] = useState(0)
     const [fromLocation, setFromLocation] = useState("")
@@ -105,26 +107,6 @@ const Home = () => {
         })
     }, []);
 
-    const menuClick = (status) => {
-        if (!isMobile) {
-            if (status === "driver") {
-                window.scrollTo(0, 1800)
-            }
-            if (status === "client") {
-                window.scrollTo(0, 2900)
-            }
-        }
-
-        if (isMobile) {
-            if (status === "driver") {
-                window.scrollTo(0, 2300)
-            }
-            if (status === "client") {
-                window.scrollTo(0, 3600)
-            }
-        }
-    }
-
     const sendApp = () => {
         let data = {
             name: full_name,
@@ -187,14 +169,10 @@ const Home = () => {
                             {t("homeDes")}
                         </div>
                         <div className="buttons">
-                            <div onClick={() => {
-                                menuClick("client")
-                            }} className="button-client">
+                            <div onClick={() => navigate("/client-app")} className="button-client">
                                 {t("client")}
                             </div>
-                            <div onClick={() => {
-                                menuClick("driver")
-                            }} className="button-driver">
+                            <div onClick={() => navigate("/driver-app")} className="button-driver">
                                 {t("driver")}
                             </div>
                         </div>

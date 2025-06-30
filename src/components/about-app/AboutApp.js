@@ -27,20 +27,23 @@ const AboutApp = () => {
 
                 {tab_items === 0 &&
                     <div className="content">
-                        <iframe
-                                src="https://www.youtube.com/embed/_pJkjIqJgqM?si=iotJDLx-dd5oU_9y"
-                                title="YouTube video player" frameBorder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+                        <iframe src="https://www.youtube.com/embed/Z8YvBorq4Vg"
+                                title="YouTube Shorts video"
+                                frameBorder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen>
+                        </iframe>
+
                     </div>}
 
                 {tab_items === 1 &&
                     <div className="content">
-                        <iframe
-                                src="https://www.youtube.com/embed/_pJkjIqJgqM?si=iotJDLx-dd5oU_9y"
-                                title="YouTube video player" frameBorder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+                        <iframe src="https://www.youtube.com/embed/klWUHboOTUU"
+                                title="YouTube Shorts video"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen>
+                        </iframe>
+
                     </div>}
 
                 {tab_items === 2 &&

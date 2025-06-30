@@ -1696,6 +1696,7 @@ $Color2: #001020;
         }
 
         .right_side {
+          overflow: hidden;
           width: 100%;
           margin: 0 auto;
           display: flex;
@@ -1705,7 +1706,7 @@ $Color2: #001020;
             margin-top: 20px;
             margin-right: 0px;
             margin-left: 40px;
-            width: 120%;
+            width: 100%;
           }
         }
       }

@@ -67,7 +67,7 @@ const Navbar = () => {
                 navigate("/about-app")
             } else if (id === 4) {
                 setTimeout(() => {
-                    window.scrollTo(0, 4300)
+                    window.scrollTo(0, 4800)
                 }, 500);
                 navigate("/")
             }
@@ -88,7 +88,7 @@ const Navbar = () => {
                 navigate("/about-app")
             } else if (id === 4) {
                 setTimeout(() => {
-                    window.scrollTo(0, 3400)
+                    window.scrollTo(0, 4000)
                 }, 500);
                 navigate("/")
             }
@@ -124,7 +124,12 @@ const Navbar = () => {
 
                     <div onClick={() => {
                         setNav(false)
-                        window.scrollTo(0, 6300)
+
+                        setTimeout(() => {
+                            window.scrollTo(0, 5800)
+                        }, 500);
+                        navigate("/")
+
                     }} className="driver_btn">
                         {t("send")}
                     </div>
@@ -160,7 +165,10 @@ const Navbar = () => {
             </div>
 
             <div onClick={() => {
-                window.scrollTo(0, 5500)
+                setTimeout(() => {
+                    window.scrollTo(0, 5300)
+                }, 500);
+                navigate("/")
             }} className="driver_btn">
                 {t("send")}
             </div>
