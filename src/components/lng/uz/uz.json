@@ -65,5 +65,7 @@
   "app-client": "Ada taksi (Mijoz)",
   "offer": "Oferta shartlari",
   "appClientWeb": "ADA Taxi yo‘lovchi web saytidan foydalaning!",
-  "appClientDesWeb": "Ushbu web sayt orqali endi buyurtma berish yanada oson. Kompyuteringiz brovseriga kiring va client.adataxi.uz dep yozing va ro'yxatdan o'ting. So'ng istalgan yo'nalishga buyurtma berishingiz mumkin."
+  "appClientDesWeb": "Ushbu web sayt orqali endi buyurtma berish yanada oson. Kompyuteringiz brovseriga kiring va client.adataxi.uz dep yozing va ro'yxatdan o'ting. So'ng istalgan yo'nalishga buyurtma berishingiz mumkin.",
+  "home-title": "Viloyatlararo taksi, ADA TAXI – Tez, Qulay va Ishonchli Taksi Xizmati O‘zbekiston bo‘ylab",
+  "home-des": "ADA TAXI — bu viloyatlararo qatnov, pochta jo‘natmalari va sayohat xizmatlarini yagona platformada birlashtirgan zamonaviy ilova. Biz haydovchilar va mijozlarni xavfsiz, tezkor va qulay tarzda bog‘laymiz. Pitaklarda kutishga hojat yo‘q — ADA bilan yo‘lga chiqish oson, ishonchli va samarali."
 }

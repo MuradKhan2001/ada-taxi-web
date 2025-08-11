@@ -3,12 +3,18 @@ import "./Driver-app.scss"
 import Footer from "../footer/Footer";
 import Navbar from "../Navbar/Navbar";
 import {useTranslation} from "react-i18next";
+import {Helmet} from "react-helmet";
 
 const DriverApp = () => {
     const {t} = useTranslation();
 
     return (
         <div className="about-app">
+            <Helmet>
+                <title>{t("home-title")}</title>
+                <meta name="description"
+                      content={t("home-des")}/>
+            </Helmet>
             <Navbar/>
             <div className="content-wrapper">
                 <div className="saction_one">

@@ -10,6 +10,7 @@ import {useMediaQuery} from "@mui/material";
 import axios from "axios";
 import i18next from "i18next";
 import {useNavigate} from "react-router-dom";
+import {Helmet} from "react-helmet"
 
 const Home = () => {
     const isMobile = useMediaQuery("(max-width: 768px)");
@@ -152,6 +153,12 @@ const Home = () => {
     }
 
     return <div className="home-wrapper">
+        <Helmet>
+            <title>{t("home-title")}</title>
+            <meta name="description"
+                  content={t("home-des")}/>
+        </Helmet>
+
         <div className="home_page">
             <div className="navbar_box">
                 <Navbar/>

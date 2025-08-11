@@ -4,6 +4,7 @@ import Footer from "../footer/Footer";
 import Navbar from "../Navbar/Navbar";
 import {useTranslation} from "react-i18next";
 import OfferApp from "../offer-app/OfferApp";
+import {Helmet} from "react-helmet";
 
 const AboutApp = () => {
     const {t} = useTranslation();
@@ -11,6 +12,11 @@ const AboutApp = () => {
 
     return (
         <div className="about-app">
+            <Helmet>
+                <title>{t("home-title")}</title>
+                <meta name="description"
+                      content={t("home-des")}/>
+            </Helmet>
             <Navbar/>
             <div className="content-wrapper">
                 <div className="tab">
